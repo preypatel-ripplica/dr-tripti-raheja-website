@@ -1,0 +1,278 @@
+import type { ServiceContent } from "@/components/ServiceLayout/ServiceLayout";
+
+// Content transcribed from the live drtriptiraheja.com service pages.
+// Structured as data so the CMS integrator can source it from a CMS later.
+
+export const serviceContent: Record<string, ServiceContent> = {
+  "high-risk-pregnancy": {
+    slug: "high-risk-pregnancy",
+    title: "Gynecologist For High Risk Pregnancy",
+    breadcrumb: "High Risk Pregnancy",
+    subtitle:
+      "Evidence-based, tailor-made pregnancy care that keeps you and your baby safe through every trimester.",
+    heroImage: "/images/1-1.png",
+    blocks: [
+      {
+        type: "text",
+        paragraphs: [
+          "During the 9 months of your pregnancy you are supported and provided evidence based care. You can also join our antenatal classes, considered one of the best in Delhi. It prepares you and your partner for your D day. Your pregnancy care is tailor made to your needs.",
+        ],
+      },
+      {
+        type: "imageText",
+        heading: "Making delivery safe for you",
+        image: "/images/2-1.png",
+        imageSide: "right",
+        paragraphs: [
+          "Dr Tripti Raheja is a prominent gynecologist for high risk pregnancy in North Delhi. She is an experienced gynecologist who has handled several pregnancy cases including many high risk pregnancies and treated them with sheer wisdom and proficiency. That's why she is considered among one of the most reliable gynecologists in Delhi.",
+          "We identified a need for a good lactational and postpartum counsellor. Dr Tripti Raheja gives you post-delivery advice on breast feeding and lactation so that your post delivery condition and your baby both nurture in the right way.",
+        ],
+      },
+      {
+        type: "text",
+        paragraphs: [
+          "So if you are expecting and searching for a clinically professional gynecologist in Delhi for high risk pregnancy, do visit our clinic and fix an appointment with us for a safe and normal delivery.",
+        ],
+      },
+      {
+        type: "gallery",
+        images: [
+          { src: "/images/3-1.png", alt: "Pregnancy care" },
+          { src: "/images/4-1.png", alt: "Antenatal support" },
+          { src: "/images/dr-tripti-1.jpg", alt: "Consultation" },
+        ],
+      },
+    ],
+  },
+
+  "laparoscopic-surgery": {
+    slug: "laparoscopic-surgery",
+    title: "Gyne Laparoscopy Surgeon in North Delhi",
+    breadcrumb: "Laparoscopic Surgery",
+    subtitle:
+      "Minimally invasive keyhole surgery for faster recovery, less pain and smaller scars.",
+    heroImage: "/images/9.jpg",
+    blocks: [
+      {
+        type: "text",
+        paragraphs: [
+          "Laparoscopy is performed as a minimally invasive surgical procedure that is used to diagnose and treat several conditions in the abdominal and pelvic areas. It offers a view of internal organs to see the signs of endometriosis and other possible problems.",
+          "During the procedure, a small cut is made. A thin tube with a camera fitted at the end, which is called a laparoscope, is inserted through a tiny incision to allow the gyne laparoscopy surgeon in North Delhi to closely examine the organs of the area. Other surgical instruments can be inserted through additional small incisions.",
+        ],
+      },
+      {
+        type: "list",
+        heading: "Reasons to perform Laparoscopy",
+        intro: "Laparoscopy is done for the following reasons:",
+        items: [
+          "To identify and treat problems such as endometriosis, ectopic pregnancy and pelvic inflammatory disease.",
+          "To locate problems that make it hard for women to become pregnant — cysts, adhesions, fibroids and infection.",
+          "To find out if cancer from another area of the body has spread to the abdomen.",
+          "When initial fertility tests do not show the cause for infertility.",
+        ],
+      },
+      {
+        type: "imageText",
+        heading: "Treatment for ovarian cyst in North Delhi",
+        image: "/images/10.jpg",
+        imageSide: "left",
+        paragraphs: [
+          "The fertility egg grows in a sac called a follicle. In most cases the follicle breaks open and produces an egg. However, when it does not break, the fluid inside the sac can form a cyst on the ovary.",
+          "In most cases treatment is not required as the cyst disappears in a few months. Whether treatment is needed depends on the size and appearance of the cyst, the symptoms you have, and whether you have had menopause.",
+        ],
+      },
+      {
+        type: "text",
+        heading: "Treatment",
+        paragraphs: [
+          "The treatment for ovarian cysts usually requires surgical removal through a process called laparoscopy. This keyhole surgery is performed where a small cut is made in the abdomen. A laparoscope is inserted through the incision so that the surgeon can see the internal organs and remove the cyst with precision.",
+        ],
+      },
+      {
+        type: "gallery",
+        images: [
+          { src: "/images/8.jpg", alt: "Laparoscopic procedure" },
+          { src: "/images/7.jpg", alt: "Operating theatre" },
+        ],
+      },
+    ],
+  },
+
+  "infertility-treatment": {
+    slug: "infertility-treatment",
+    title: "Best Specialist for Fibroid Treatment in North Delhi",
+    breadcrumb: "Infertility Treatment",
+    subtitle:
+      "Advanced, compassionate care for fibroids, menstrual disorders and infertility.",
+    heroImage: "/images/11.jpg",
+    blocks: [
+      {
+        type: "text",
+        paragraphs: [
+          "Fibroids are tumors that most commonly and frequently occur in the female reproductive system. They are non-cancerous (benign) tumors that grow from the muscle layer of the uterus. Fibroids are also known as uterine fibroids, myomas, leiomyomas or fibromas.",
+        ],
+      },
+      {
+        type: "imageText",
+        heading: "Causes and Risk",
+        image: "/images/12.jpg",
+        imageSide: "right",
+        paragraphs: [
+          "Though the causes of fibroids are not fully known, it is believed that each tumor develops from an aberrant muscle cell in the uterus, which rapidly multiplies due to the high influence of estrogen. Women are at risk of developing fibroids as they approach menopause due to long exposure to estrogen.",
+        ],
+      },
+      {
+        type: "list",
+        heading: "Symptoms of fibroids",
+        intro:
+          "Different individuals experience different symptoms. Some have no symptoms at all, while others may experience severe and disruptive symptoms such as:",
+        items: [
+          "Pain in the pelvic region",
+          "Pain during intercourse",
+          "Prolonged or heavy menstrual periods",
+          "Abnormal bleeding during periods",
+          "Low back pain",
+        ],
+      },
+      {
+        type: "list",
+        heading: "Fibroid Treatment Options for Effective Relief",
+        intro:
+          "Treatment may not be necessary if you have fibroids with minor or no symptoms. When treatment becomes imperative, it may be in the form of medication or surgery:",
+        items: [
+          "GnRHA injection — reduces estrogen emission to shrink fibroids without affecting fertility once stopped.",
+          "Anti-inflammatory drugs — reduce prostaglandin production associated with heavy periods and act as painkillers.",
+          "Hysterectomy — removal of the uterus, considered when fibroids are very large or bleeding is excessive.",
+          "Myomectomy — fibroids are surgically removed from the uterus wall, ideal for women who wish to conceive.",
+        ],
+      },
+      {
+        type: "text",
+        paragraphs: [
+          "Apart from these, other treatments such as endometrial ablation, uterine artery embolization and ultrasound surgery can be considered depending on the condition and symptoms of the patient.",
+        ],
+      },
+    ],
+  },
+
+  "hysteroscopy-treatment": {
+    slug: "hysteroscopy-treatment",
+    title: "Hysteroscopy Surgery in North Delhi",
+    breadcrumb: "Hysteroscopy Treatment",
+    subtitle:
+      "A gentle, precise procedure to look inside the uterus and treat problems in the same visit.",
+    heroImage: "/images/117.jpg",
+    blocks: [
+      {
+        type: "text",
+        paragraphs: [
+          "Hysteroscopy is a procedure that lets your doctor look inside your uterus (womb). This is done using a narrow tube-like instrument called a hysteroscope, which is very slim (about 3 to 5 millimetres in diameter). It's carefully passed through the vagina and cervix into the uterus.",
+          "The hysteroscope has special channels which allow the doctor to pass various instruments into the uterus. This means that, as well as being able to look inside, the doctor can perform certain procedures at the same time.",
+        ],
+      },
+      {
+        type: "list",
+        heading: "What is hysteroscopy used for?",
+        intro: "A hysteroscopy may be used to find the cause of various problems such as:",
+        items: [
+          "Heavy or irregular bleeding that has not improved with medication.",
+          "Bleeding in-between periods.",
+          "Bleeding after menopause.",
+          "Irregular bleeding whilst taking hormone replacement therapy (HRT).",
+          "Before an operation to make periods less heavy (endometrial ablation).",
+          "Unexplained miscarriages.",
+        ],
+      },
+      {
+        type: "list",
+        intro: "As well as investigating problems, hysteroscopy can also be used to:",
+        items: [
+          "Remove polyps — small lumps of tissue growing on the lining of the uterus.",
+          "Remove scar tissue in the uterus.",
+          "Remove adhesions (areas where the walls of the uterus stick together).",
+          "Remove fibroids (non-cancerous growths in the uterus).",
+          "Locate a 'lost' or stuck contraceptive device, such as an IUD (coil).",
+        ],
+      },
+      {
+        type: "imageText",
+        heading: "What happens during a hysteroscopy?",
+        image: "/images/114.jpg",
+        imageSide: "left",
+        paragraphs: [
+          "A hysteroscopy can be done under general anaesthetic (asleep) or with a local anaesthetic (awake). Your doctor may use a speculum to see the cervix, then passes the hysteroscope through the cervix into the uterus.",
+          "The hysteroscope is connected to a camera and TV screen showing the inside of the uterus. Some gas or fluid may be used to expand the uterus, making it easier to see the lining. The doctor may take a biopsy. A hysteroscopy takes between 5–30 minutes, and most women feel no or only minimal discomfort.",
+        ],
+      },
+      {
+        type: "gallery",
+        images: [
+          { src: "/images/115.jpg", alt: "Hysteroscopy" },
+          { src: "/images/116.jpg", alt: "Consultation" },
+          { src: "/images/23424-e1773206128888.png", alt: "Procedure diagram" },
+        ],
+      },
+    ],
+  },
+
+  "robotic-gynaecologic-surgery": {
+    slug: "robotic-gynaecologic-surgery",
+    title: "Robotic Gynae Surgery in Delhi",
+    breadcrumb: "Robotic Gynaecologic Surgery",
+    subtitle:
+      "Advanced robotic-assisted surgery for greater precision, faster recovery and better outcomes.",
+    heroImage: "/images/23-rl5uj6c5d368ve9btvflyxmiwna103ixodjb7c0blo.jpg",
+    blocks: [
+      {
+        type: "text",
+        heading: "What is Robotic Gynecologic Surgery?",
+        paragraphs: [
+          "Robotic gynecologic surgery is an advanced, minimally invasive technique that allows surgeons to perform highly precise and complex procedures using a robotic-assisted system. One of the most commonly used technologies is the da Vinci Surgical System, which features robotic arms fitted with surgical instruments.",
+          "During the procedure, the surgeon operates from a console, controlling the robotic arms with exceptional accuracy. The system translates the surgeon's hand movements into smaller, more refined actions inside the body, enabling better access to delicate and hard-to-reach areas.",
+        ],
+      },
+      {
+        type: "list",
+        heading: "How Does Robotic Surgery Work?",
+        intro: "Here's a simple overview of the procedure:",
+        items: [
+          "Small incisions are made in the abdominal area.",
+          "A high-definition camera and robotic instruments are inserted through these incisions.",
+          "The surgeon views a magnified 3D image of the surgical site on a monitor.",
+          "Using hand controls, the surgeon guides the robotic arms with enhanced precision.",
+        ],
+      },
+      {
+        type: "imageText",
+        heading: "Key Benefits of Robotic Gynecologic Surgery",
+        image: "/images/24-rl5uj5eb693fazh49ylcd9419vlbci30bu1o92facw.jpg",
+        imageSide: "right",
+        paragraphs: [
+          "Robotic-assisted surgery offers several advantages over conventional methods — enhanced precision in delicate areas, quicker recovery, reduced pain, minimal blood loss, smaller scars, a lower risk of complications, and improved long-term results with fewer complications.",
+        ],
+      },
+      {
+        type: "list",
+        heading: "Common Gynecological Conditions Treated",
+        intro: "Robotic surgery is widely used to treat various gynecological conditions, including:",
+        items: [
+          "Fibroids — precise removal while preserving the uterus.",
+          "Endometriosis — effective removal of abnormal tissue with minimal damage to surrounding organs.",
+          "Hysterectomy — safer removal of the uterus with faster recovery.",
+          "Ovarian cysts — gentle removal while preserving healthy ovarian tissue.",
+          "Pelvic organ prolapse — advanced repair procedures with durable results.",
+        ],
+      },
+      {
+        type: "text",
+        heading: "Conclusion",
+        paragraphs: [
+          "Robotic gynecologic surgery is revolutionizing women's healthcare by offering safer procedures, higher precision, and faster recovery. From managing fibroids to treating complex conditions like endometriosis, this advanced approach helps achieve better outcomes and enhances overall quality of life.",
+          "If you are considering gynecologic surgery, consulting a specialist can help determine whether robotic surgery is the right option for you.",
+        ],
+      },
+    ],
+  },
+};
+
+export const serviceSlugs = Object.keys(serviceContent);

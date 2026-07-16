@@ -1,0 +1,199 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 48px;
+  align-items: start;
+}
+.main {
+  min-width: 0;
+}
+.heroImage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px 120px 16px 120px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-md);
+}
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.block {
+  margin-bottom: 34px;
+}
+.block h2 {
+  margin-bottom: 16px;
+}
+
+.checkList {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+.checkList li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.checkList svg {
+  color: var(--teal);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.imageText {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.imgLeft {
+  direction: rtl;
+}
+.imgLeft > * {
+  direction: ltr;
+}
+.imageTextMedia {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.blockImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.imageTextBody h2 {
+  margin-bottom: 14px;
+}
+
+.galleryStrip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 10px 0 40px;
+}
+.galleryItem {
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ------------------------------ sidebar ------------------------------ */
+.sidebar {
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+  display: grid;
+  gap: 24px;
+}
+.sideCard {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+}
+.sideCard h3 {
+  margin-bottom: 18px;
+  font-size: 1.2rem;
+}
+.sideNav {
+  display: grid;
+  gap: 8px;
+}
+.sideNav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: var(--ink);
+  transition: all 0.2s;
+}
+.sideNav a svg {
+  color: var(--teal);
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.sideNav a:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.sideNav a:hover svg {
+  opacity: 1;
+  transform: translateX(3px);
+}
+.sideActive {
+  background: var(--teal) !important;
+  border-color: var(--teal) !important;
+  color: #fff !important;
+}
+.sideActive svg {
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+.callCard {
+  background: linear-gradient(150deg, var(--blue-dark), var(--teal));
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 30px 26px;
+  text-align: center;
+}
+.callIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  margin-bottom: 14px;
+}
+.callCard h3 {
+  color: #fff;
+  margin-bottom: 6px;
+}
+.callCard p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+.callNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .sidebar {
+    position: static;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 620px) {
+  .imageText {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+  .galleryStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,194 @@
+.intro {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 56px;
+  align-items: center;
+}
+.introMedia {
+  position: relative;
+}
+.introImg {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
+}
+.introQuote {
+  position: absolute;
+  left: -14px;
+  bottom: -20px;
+  max-width: 290px;
+  background: var(--pink);
+  color: #fff;
+  padding: 20px 22px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+}
+.introQuote svg {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+}
+.introQuote p {
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+.introText h2 {
+  margin-bottom: 18px;
+}
+.introText p {
+  margin-bottom: 16px;
+}
+.miniStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+.miniStats strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: var(--teal);
+  line-height: 1;
+}
+.miniStats span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* qualifications */
+.qualGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.qualCard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.qualCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+.qualYear {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  background: rgba(194, 78, 122, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.qualCard h3 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+.qualCard p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* expertise */
+.expertise {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: start;
+}
+.expertiseLead {
+  color: var(--muted);
+  margin-top: 14px;
+}
+.expertiseCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
+}
+.expList {
+  display: grid;
+  gap: 14px;
+}
+.expList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.96rem;
+  color: var(--ink);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.expList svg {
+  color: var(--teal);
+  flex-shrink: 0;
+}
+
+/* highlights */
+.highlightGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.highlightCard {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--teal);
+}
+.highlightCard h3 {
+  font-size: 1.2rem;
+  margin-bottom: 18px;
+}
+.highlightCard ul {
+  display: grid;
+  gap: 14px;
+}
+.highlightCard li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+.highlightCard li svg {
+  color: var(--pink);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .intro,
+  .expertise {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .qualGrid,
+  .highlightGrid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .miniStats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .expertiseCols {
+    grid-template-columns: 1fr;
+  }
+}

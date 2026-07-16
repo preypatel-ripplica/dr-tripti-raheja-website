@@ -1,0 +1,322 @@
+/* ==========================================================================
+   Dr. Tripti Raheja — v2 editorial design system.
+   Warm, feminine, women's-health brand. See DESIGN_TASTE.md.
+   Fraunces (display serif) + DM Sans (body). Rose + navy on cream.
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --cream: #fbf5ef;
+  --peach: #f7e7dd;
+  --blush: #f3d9d6;
+  --rose: #c24e7a;
+  --rose-deep: #9e3a61;
+  --navy: #1f2a54;
+  --navy-deep: #16203c;
+  --mauve: #c6a2ae;
+  --coral: #e8977e;
+  --sage: #9fb29a;
+
+  /* Ink & neutrals (warm) */
+  --ink: #2c2233; /* headings + strong text */
+  --text: #5a5060; /* body */
+  --muted: #8b8091; /* secondary */
+  --line: #ebdfd7; /* hairlines */
+
+  /* Legacy aliases (kept so copied components keep working) */
+  --teal: var(--rose);
+  --teal-dark: var(--rose-deep);
+  --blue: var(--navy);
+  --blue-dark: var(--navy-deep);
+  --pink: var(--rose);
+  --pink-light: #d76b90;
+  --bg: var(--cream);
+  --bg-alt: var(--peach);
+  --bg-soft: #fbf3ee;
+  --border: var(--line);
+
+  /* Type */
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
+  --font-body: var(--font-dmsans), "DM Sans", system-ui, sans-serif;
+  --font-heading: var(--font-body); /* UI chrome stays sans; headings use display */
+
+  /* Shape & depth */
+  --radius: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 34px;
+  --shadow-sm: 0 6px 20px rgba(120, 60, 80, 0.08);
+  --shadow-md: 0 18px 44px rgba(120, 60, 80, 0.12);
+  --shadow-lg: 0 34px 80px rgba(90, 40, 70, 0.18);
+
+  /* Layout */
+  --container: 1200px;
+  --gutter: 24px;
+  --header-h: 92px;
+}
+
+/* ------------------------------ reset ---------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--cream);
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+}
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* --------------------------- typography -------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+h1 {
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 500;
+}
+h2 {
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+}
+h3 {
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+}
+p {
+  margin: 0 0 1rem;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+em,
+.italic {
+  font-style: italic;
+}
+
+/* ---------------------------- utilities -------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section {
+  padding-block: clamp(64px, 9vw, 120px);
+}
+.section--tint {
+  background: var(--peach);
+}
+.section--blush {
+  background: var(--blush);
+}
+
+/* Eyebrow label (sans, rose, with a leading asterisk) */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 18px;
+}
+.eyebrow::before {
+  content: "✳";
+  font-size: 0.9em;
+  transform: translateY(1px);
+}
+
+/* Standalone asterisk accent */
+.ast {
+  color: var(--rose);
+  font-family: var(--font-display);
+  font-style: normal;
+}
+
+.section-head {
+  max-width: 720px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+.section-head p {
+  color: var(--muted);
+  margin-top: 16px;
+  font-size: 1.08rem;
+}
+.accent {
+  color: var(--rose);
+}
+.accent-italic {
+  color: var(--rose);
+  font-style: italic;
+}
+
+/* ----------------------------- buttons --------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1;
+  padding: 16px 30px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn svg {
+  flex-shrink: 0;
+}
+.btn--primary {
+  background: var(--rose);
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(194, 78, 122, 0.26);
+}
+.btn--primary:hover {
+  background: var(--rose-deep);
+  box-shadow: 0 18px 38px rgba(158, 58, 97, 0.3);
+}
+.btn--navy {
+  background: var(--navy);
+  color: #fff;
+}
+.btn--navy:hover {
+  background: var(--navy-deep);
+}
+/* legacy alias used by copied components */
+.btn--pink {
+  background: var(--rose);
+  color: #fff;
+}
+.btn--pink:hover {
+  background: var(--rose-deep);
+}
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.btn--outline:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.btn--light {
+  background: #fff;
+  color: var(--navy);
+}
+.btn--light:hover {
+  color: var(--rose);
+}
+
+/* ------------------------- shape / motif helpers ----------------------- */
+/* organic "leaf/petal" frame: one sharp corner, one deeply rounded */
+.leaf-frame {
+  border-radius: 12px 130px 12px 130px;
+  overflow: hidden;
+}
+.leaf-frame-alt {
+  border-radius: 130px 12px 130px 12px;
+  overflow: hidden;
+}
+
+/* --------------------------- rich content ------------------------------ */
+.prose h2,
+.prose h3 {
+  margin-top: 1.8em;
+  margin-bottom: 0.55em;
+}
+.prose h2:first-child,
+.prose h3:first-child {
+  margin-top: 0;
+}
+.prose p {
+  color: var(--text);
+  margin-bottom: 1.15rem;
+}
+.prose ul {
+  list-style: none;
+  margin: 0 0 1.3rem;
+  display: grid;
+  gap: 12px;
+}
+.prose ul li {
+  position: relative;
+  padding-left: 32px;
+  color: var(--text);
+}
+.prose ul li::before {
+  content: "✳";
+  position: absolute;
+  left: 2px;
+  top: 0.15em;
+  color: var(--rose);
+  font-size: 0.95em;
+}
+.prose strong {
+  color: var(--ink);
+}
+
+/* accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+:focus-visible {
+  outline: 3px solid rgba(194, 78, 122, 0.5);
+  outline-offset: 2px;
+}

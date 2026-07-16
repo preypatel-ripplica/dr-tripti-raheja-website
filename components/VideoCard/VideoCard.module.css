@@ -1,0 +1,59 @@
+.card {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #1a2140;
+  box-shadow: var(--shadow-md);
+}
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+.thumb {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.poster:hover .thumb {
+  transform: scale(1.06);
+}
+.poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.35));
+}
+.playBtn {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  padding-left: 4px;
+  box-shadow: 0 8px 24px rgba(194, 78, 122, 0.5);
+  transition: transform 0.2s, background 0.2s;
+}
+.poster:hover .playBtn {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--pink);
+}
