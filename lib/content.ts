@@ -63,46 +63,175 @@ export const testimonialVideos = [
   "zHGbdUq6NG8",
 ];
 
-// Video gallery.
+// Video gallery — same order as the live site's video gallery page.
 export const galleryVideos = [
-  "3b5gDNWen4A",
-  "BOtTISJuqyY",
-  "J3ksle3AOWM",
-  "JdiAnUDznDw",
   "QmlxvopDYVo",
+  "J3ksle3AOWM",
   "Si8VIP8VvcA",
-  "XhwmoKPkhrk",
-  "YFPxPMbIxW8",
-  "eJaXpGLJNVw",
   "i77Bw3G5STI",
-  "iRryksY_ACA",
+  "3b5gDNWen4A",
   "sP4BW-Krfns",
+  "XhwmoKPkhrk",
+  "BOtTISJuqyY",
+  "iRryksY_ACA",
+  "JdiAnUDznDw",
+  "eJaXpGLJNVw",
+  "YFPxPMbIxW8",
 ];
+
+// A blog article is stored as structured blocks (intro → sections → FAQs) so
+// the detail template stays data-driven and a CMS can replace it later.
+export type BlogSection = {
+  heading?: string;
+  body?: string[];
+  // Bullets may use "Label — text" form; the template bolds the label part.
+  bullets?: string[];
+};
 
 export type BlogPost = {
   slug: string;
   title: string;
+  category: string;
   excerpt: string;
   image: string;
-  href: string;
+  date: string;
+  readTime: string;
+  intro: string;
+  sections: BlogSection[];
+  faqs?: Faq[];
+  // SEO overrides (CMS fields; fall back to title/excerpt when empty).
+  seoTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
 };
 
 export const blogPosts: BlogPost[] = [
   {
     slug: "what-happens-if-i-skip-pap-smear",
     title: "What happens if I skip Pap smear?",
+    category: "Preventive Care",
     excerpt:
       "Cervical cancer develops silently and doesn't have any symptoms in its early stages. Regular Pap smears are a simple, powerful way to catch changes early.",
     image: "/images/1-5.png",
-    href: "https://www.drtriptiraheja.com/what-happens-if-i-skip-pap-smear/",
+    date: "1 Feb 2026",
+    readTime: "3 min read",
+    intro:
+      "Cervical cancer develops silently — it usually has no symptoms in its precancerous or early stages. Precancerous changes can exist in the cervix for years before turning into cancer, and the only way to catch them at that stage is regular screening with Pap smears.",
+    sections: [
+      {
+        heading: "What happens if you skip your Pap smear?",
+        body: [
+          "If you skip Pap smears, these early changes remain undetected and untreated, allowing them to progress into advanced cancer.",
+          "By the time symptoms like abnormal bleeding, foul-smelling discharge or pelvic pain appear, the disease is often at a more advanced stage and much harder to treat. A few minutes of routine screening can prevent years of difficult treatment.",
+        ],
+      },
+      {
+        heading: "What is a Pap smear?",
+        body: [
+          "A Pap smear is a simple screening test done as a routine health check — even if you don't have any symptoms. Your gynaecologist gently takes a small sample of cells from the cervix using a soft brush, and these cells are examined under a microscope to look for abnormal changes.",
+          "It's a quick test that takes only a few minutes. It isn't painful, although a few women feel slight discomfort while the sample is taken.",
+        ],
+      },
+      {
+        heading: "How long do the results take?",
+        body: [
+          "It usually takes 3–7 days to get the results, depending on the laboratory.",
+        ],
+      },
+      {
+        heading: "How can I make a Pap smear more comfortable?",
+        body: [
+          "Most women fear that a Pap smear is painful, but in reality what most experience is mild discomfort or pressure — not pain. A few simple steps make the test easier:",
+        ],
+        bullets: [
+          "Relax your pelvic muscles — tension increases discomfort.",
+          "Schedule the test — for a time when you don't have your period.",
+          "48 hours before — avoid intercourse, vaginal medicines and douching.",
+          "Speak up — inform your doctor immediately if you feel any pain.",
+        ],
+      },
+      {
+        heading: "The takeaway",
+        body: [
+          "Regular Pap smears catch cervical changes at the stage when they are easiest to treat. If you're due — or overdue — for screening, book a routine visit; it takes only a few minutes.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Do I need a Pap smear if I have no symptoms?",
+        a: "Yes. A Pap smear is a routine screening test done even when you have no symptoms — precancerous changes in the cervix are silent, and screening is the only way to find them early.",
+      },
+      {
+        q: "Is a Pap smear painful?",
+        a: "No. Most women feel only mild discomfort or pressure, not pain. Relaxing your pelvic muscles helps, and you should tell your doctor right away if anything hurts.",
+      },
+    ],
   },
   {
     slug: "can-you-control-fibroids-100",
     title: "Can You Control Fibroids 100%?",
+    category: "Women's Health",
     excerpt:
       "Understanding what's in your hands and what isn't. Fibroids are common, non-cancerous growths — here's what you can realistically manage and what needs care.",
     image: "/images/1-7.png",
-    href: "https://www.drtriptiraheja.com/can-you-control-fibroids-100/",
+    date: "1 Feb 2026",
+    readTime: "3 min read",
+    intro:
+      "Fibroids are non-cancerous solid tumours of the uterus. They are very common, and many women wonder if they can control them entirely through lifestyle changes. The honest answer: some factors are within your control — and others aren't.",
+    sections: [
+      {
+        heading: "What you can control",
+        body: [
+          "Day-to-day habits genuinely influence how fibroids behave and how you feel:",
+        ],
+        bullets: [
+          "Diet — include anti-inflammatory foods like leafy greens, whole grains and flaxseeds to help regulate hormones.",
+          "Exercise — regular activity can reduce estrogen levels and improve your overall health.",
+          "Weight management — maintaining a healthy weight can lower your risk of fibroid growth.",
+          "Stress reduction — chronic stress affects hormones; try yoga, meditation or deep-breathing exercises.",
+          "Symptom tracking — keep a journal to understand your triggers and track any changes.",
+        ],
+      },
+      {
+        heading: "What's beyond your control",
+        body: [
+          "Some drivers of fibroid growth are simply biology, and no lifestyle change overrides them:",
+        ],
+        bullets: [
+          "Genetics — a family history of fibroids increases your risk.",
+          "Hormonal fluctuations — estrogen and progesterone levels naturally fluctuate, influencing fibroid growth.",
+          "Fibroid size and location — these factors may determine whether symptoms improve or worsen.",
+        ],
+      },
+      {
+        heading: "When to seek medical help",
+        body: [
+          "Even with a healthy lifestyle, fibroids may still cause severe symptoms. Consult your gynaecologist if you experience:",
+        ],
+        bullets: [
+          "Heavy menstrual bleeding",
+          "Severe pelvic pain",
+          "Rapid fibroid growth",
+        ],
+      },
+      {
+        heading: "The honest answer",
+        body: [
+          "So — can you control fibroids 100%? No. Lifestyle changes are worth making and can meaningfully ease symptoms, but genetics and hormones will always play their part. What you can control completely is getting the right care: an early consultation turns an uncertain worry into a clear plan.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Are fibroids cancerous?",
+        a: "No. Fibroids are non-cancerous (benign) solid tumours of the uterus, and they are very common in women of reproductive age.",
+      },
+      {
+        q: "Can diet alone shrink fibroids?",
+        a: "Diet helps regulate the hormones that influence fibroid growth, but it cannot guarantee shrinkage on its own. If symptoms like heavy bleeding or pelvic pain persist, a gynaecologist can discuss treatment options with you.",
+      },
+    ],
   },
 ];
 

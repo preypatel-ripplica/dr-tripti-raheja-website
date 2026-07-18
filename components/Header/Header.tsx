@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { nav, contact, socials } from "@/lib/site";
+import { contact, socials, type NavItem } from "@/lib/site";
 import { socialIcon, Phone, Mail, Chevron, Menu, Close, ArrowRight } from "@/components/Icons";
 import styles from "./Header.module.css";
 
-export default function Header() {
+export default function Header({ nav }: { nav: NavItem[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);

@@ -3,7 +3,8 @@ import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import { site } from "@/lib/site";
+import { site, getDefaultNav, type NavItem } from "@/lib/site";
+import { getTreatmentMenuItems } from "@/lib/cms";
 
 // Editorial display serif (see DESIGN_TASTE.md). Optical sizing + italics for warmth.
 const fraunces = Fraunces({
@@ -37,15 +38,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const defaultNav = getDefaultNav();
+  const treatments = await getTreatmentMenuItems();
+
+  const nav: NavItem[] = [
+    defaultNav[0],
+    defaultNav[1],
+    {
+      label: "Treatments",
+      href: "#",
+      children: treatments.length > 0 ? treatments : defaultNav[2].children,
+    },
+    ...defaultNav.slice(3),
+  ];
+
   return (
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body>
-        <Header />
+        <Header nav={nav} />
         <main>{children}</main>
         <Footer />
       </body>

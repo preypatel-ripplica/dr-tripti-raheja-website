@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import ServiceLayout from "@/components/ServiceLayout/ServiceLayout";
-import { serviceContent } from "@/lib/serviceContent";
+import { getServiceContentBySlug } from "@/lib/cms";
 
-const content = serviceContent["infertility-treatment"];
+const SLUG = "infertility-treatment";
 
-export const metadata: Metadata = {
-  title: content.title,
-  description: content.subtitle,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getServiceContentBySlug(SLUG);
+  return { title: content.title, description: content.subtitle };
+}
 
-export default function Page() {
+export default async function Page() {
+  const content = await getServiceContentBySlug(SLUG);
   return <ServiceLayout content={content} />;
 }

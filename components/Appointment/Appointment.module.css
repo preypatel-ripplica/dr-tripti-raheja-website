@@ -133,6 +133,22 @@
   resize: vertical;
 }
 
+.error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(194, 78, 122, 0.35);
+  background: rgba(194, 78, 122, 0.08);
+  color: var(--rose-deep);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.form button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .success {
   text-align: center;
   padding: 30px 10px;

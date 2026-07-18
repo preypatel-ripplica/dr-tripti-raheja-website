@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { services, stats, contact } from "@/lib/site";
-import { faqs, reviews, reviewsSummary, testimonialVideos, blogPosts } from "@/lib/content";
+import { faqs, reviews, reviewsSummary, testimonialVideos } from "@/lib/content";
+import { getBlogPosts } from "@/lib/cms";
 import Appointment from "@/components/Appointment/Appointment";
 import Faq from "@/components/Faq/Faq";
 import VideoCard from "@/components/VideoCard/VideoCard";
@@ -10,7 +11,8 @@ import CircleBadge from "@/components/CircleBadge/CircleBadge";
 import { ConcernGuide, ConsultationPrepKit } from "@/components/InteractiveCare/InteractiveCare";
 import { Star, ArrowRight, Check, Quote, Phone } from "@/components/Icons";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const blogPosts = await getBlogPosts();
   return (
     <>
       {/* ============================ HERO ============================ */}
@@ -300,7 +302,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className={styles.blogGrid}>
-            {blogPosts.map((post) => (
+            {blogPosts.slice(0, 2).map((post) => (
               <article key={post.slug} className={styles.blogCard}>
                 <div className={styles.blogImg}>
                   <Image src={post.image} alt={post.title} fill sizes="(max-width: 700px) 100vw, 45vw" className={styles.cover} />
@@ -308,9 +310,9 @@ export default function HomePage() {
                 <div className={styles.blogBody}>
                   <h3>{post.title}</h3>
                   <p>{post.excerpt}</p>
-                  <a href={post.href} target="_blank" rel="noopener noreferrer" className={styles.arrowLink}>
+                  <Link href={`/blogs/${post.slug}/`} className={styles.arrowLink}>
                     Read More <ArrowRight width={16} height={16} />
-                  </a>
+                  </Link>
                 </div>
               </article>
             ))}
