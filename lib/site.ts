@@ -133,3 +133,7 @@ export const stats = [
   { value: "11K+", label: "Deliveries" },
   { value: "50K+", label: "Consultations" },
 ];
+
+export function getDefaultNav(): NavItem[] {
+  return nav;
+}

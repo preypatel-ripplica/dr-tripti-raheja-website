@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
-import { blogPosts } from "@/lib/content";
+import { getBlogPosts } from "@/lib/cms";
 import { ArrowRight } from "@/components/Icons";
 import styles from "./blogs.module.css";
 
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
   description: "Women's health articles and advice from Dr. Tripti Raheja.",
 };
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
+  const blogPosts = await getBlogPosts();
   return (
     <>
       <PageHero
@@ -24,7 +26,7 @@ export default function BlogsPage() {
           <div className={styles.grid}>
             {blogPosts.map((post) => (
               <article key={post.slug} className={styles.card}>
-                <a href={post.href} target="_blank" rel="noopener noreferrer" className={styles.imgLink}>
+                <Link href={`/blogs/${post.slug}/`} className={styles.imgLink}>
                   <div className={styles.img}>
                     <Image
                       src={post.image}
@@ -34,18 +36,16 @@ export default function BlogsPage() {
                       className={styles.cover}
                     />
                   </div>
-                </a>
+                </Link>
                 <div className={styles.body}>
-                  <span className={styles.tag}>Women&apos;s Health</span>
+                  <span className={styles.tag}>{post.category}</span>
                   <h3>
-                    <a href={post.href} target="_blank" rel="noopener noreferrer">
-                      {post.title}
-                    </a>
+                    <Link href={`/blogs/${post.slug}/`}>{post.title}</Link>
                   </h3>
                   <p>{post.excerpt}</p>
-                  <a href={post.href} target="_blank" rel="noopener noreferrer" className={styles.readMore}>
+                  <Link href={`/blogs/${post.slug}/`} className={styles.readMore}>
                     Read More <ArrowRight width={16} height={16} />
-                  </a>
+                  </Link>
                 </div>
               </article>
             ))}

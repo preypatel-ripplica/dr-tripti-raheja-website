@@ -1,17 +1,51 @@
 "use client";
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { contact, services } from "@/lib/site";
 import { Phone, MapPin, Check } from "@/components/Icons";
 import styles from "./Appointment.module.css";
 
+// Web3Forms access keys are public by design (they only identify the inbox);
+// override via NEXT_PUBLIC_WEB3FORMS_KEY in .env.local if it ever rotates.
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "76200735-52bd-4bed-9f9c-094d215276fe";
+
 /**
  * Reusable "Book an Appointment" band shown across the site.
- * The form is intentionally front-end only — the integrator can wire the
- * onSubmit handler to the CMS / booking endpoint later.
+ * Submissions are delivered by Web3Forms (https://web3forms.com).
  */
 export default function Appointment({ id = "appointment" }: { id?: string }) {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", WEB3FORMS_KEY);
+    formData.append("subject", "New appointment request — drtriptiraheja.com");
+    formData.append("from_name", "Dr. Tripti Raheja Website");
+
+    setSending(true);
+    setError("");
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setSent(true);
+      } else {
+        setError(data.message || "Something went wrong. Please try again, or call us directly.");
+      }
+    } catch {
+      setError("Something went wrong. Please check your connection and try again, or call us directly.");
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <section id={id} className={`section ${styles.wrap}`}>
@@ -71,14 +105,16 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
               <p>Your request has been received. Our team will contact you shortly.</p>
             </div>
           ) : (
-            <form
-              className={styles.form}
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
-            >
+            <form className={styles.form} onSubmit={handleSubmit}>
               <h3 className={styles.formTitle}>Request a Call Back</h3>
+              {/* Web3Forms honeypot — hidden from real visitors, catches bots */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                style={{ display: "none" }}
+              />
               <div className={styles.field}>
                 <label htmlFor="ap-name">Full Name</label>
                 <input id="ap-name" name="name" type="text" placeholder="Your name" required />
@@ -100,7 +136,7 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
                     Select a service
                   </option>
                   {services.map((s) => (
-                    <option key={s.slug} value={s.slug}>
+                    <option key={s.slug} value={s.title}>
                       {s.title}
                     </option>
                   ))}
@@ -111,8 +147,18 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
                 <label htmlFor="ap-msg">Message</label>
                 <textarea id="ap-msg" name="message" rows={3} placeholder="How can we help you?" />
               </div>
-              <button type="submit" className="btn btn--primary" style={{ width: "100%" }}>
-                Book an Appointment
+              {error && (
+                <p role="alert" className={styles.error}>
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                className="btn btn--primary"
+                style={{ width: "100%" }}
+                disabled={sending}
+              >
+                {sending ? "Sending..." : "Book an Appointment"}
               </button>
             </form>
           )}

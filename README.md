@@ -44,13 +44,23 @@ public/images/yt/       YouTube poster thumbnails
 
 ## For the CMS integrator
 
-Content is deliberately kept as plain data in `lib/*.ts` so you can swap each export
+Blogs, treatments and the video gallery are already wired to the CMS through
+`lib/cms.ts`. Set `CMS_API_URL` and `CMS_API_TOKEN` in `.env.local` (see
+`.env.local.example`); without them the site builds from the local fallback
+data in `lib/*.ts`. Collection schemas and ready-to-import entries are in
+`docs/cms-collections.md` and `docs/cms-seed/`. Entries are fetched at build
+time (static export), so re-build to pick up CMS changes.
+
+Remaining content is plain data in `lib/*.ts` so you can swap each export
 for a CMS query without touching the presentation layer:
 
-- **Blogs** → `lib/content.ts` → `blogPosts`. The blog cards currently link out to the
-  live site; point them at your own `/blogs/[slug]` route once the CMS is connected.
-- **Services** → `lib/serviceContent.ts` (structured blocks) + `lib/site.ts` → `services`.
-- **Testimonials / videos / gallery** → `lib/content.ts`.
+- **Blogs** → CMS collection `blogs` (fallback: `lib/content.ts` → `blogPosts`).
+  Each post is structured content (intro, sections, FAQs) rendered by
+  `app/blogs/[slug]/page.tsx`.
+- **Treatments** → CMS collection `treatments` (fallback: `lib/serviceContent.ts`).
+  Cards/nav labels still come from `lib/site.ts` → `services`.
+- **Video gallery** → CMS collection `videos` (fallback: `lib/content.ts` → `galleryVideos`).
+- **Testimonials / photo gallery** → `lib/content.ts`.
 - **Appointment form** → `components/Appointment/Appointment.tsx`. The `onSubmit`
   currently shows a success state only; wire it to your booking endpoint/API route.
 - **Contact / clinic details / nav** → `lib/site.ts`.

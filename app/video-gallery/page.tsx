@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero/PageHero";
 import VideoGallery from "@/components/VideoGallery/VideoGallery";
 import Appointment from "@/components/Appointment/Appointment";
-import { galleryVideos } from "@/lib/content";
+import { getGalleryVideos } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Video Gallery",
   description: "Educational videos and patient stories from Dr. Tripti Raheja.",
 };
 
-export default function VideoGalleryPage() {
+export default async function VideoGalleryPage() {
+  const galleryVideos = await getGalleryVideos();
   return (
     <>
       <PageHero
