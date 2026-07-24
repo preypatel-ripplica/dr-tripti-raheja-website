@@ -24,8 +24,8 @@ export default async function HomePage() {
               Where women&apos;s health is met with <span className="accent-italic">compassionate</span> care<span className="ast">✳</span>
             </h1>
             <p className={styles.heroLead}>
-              Dr. Tripti Raheja — Senior Consultant Gynaecologist &amp; Obstetrician with
-              28+ years of experience in safe deliveries, high-risk pregnancy and advanced
+              Dr. Tripti Raheja — Director Gynaecologist &amp; Obstetrician with
+              29+ years of experience in safe deliveries, high-risk pregnancy and advanced
               laparoscopic surgery.
             </p>
             <div className={styles.heroCtas}>
@@ -51,7 +51,7 @@ export default async function HomePage() {
           <div className={styles.heroMedia}>
             <div className={styles.heroFrame}>
               <Image
-                src="/images/dr-tripti-1.jpg"
+                src="/images/Dr-Tripti-Raheja-Gynaecologist-in-Delhi-scaled-1.jpg"
                 alt="Dr. Tripti Raheja — Best Gynecologist in Delhi"
                 fill
                 sizes="(max-width: 900px) 100vw, 46vw"
@@ -60,14 +60,14 @@ export default async function HomePage() {
               />
             </div>
             <span className={styles.heroOutline} aria-hidden />
-            <CircleBadge className={styles.heroBadge} text="Trusted care · 28+ years · " />
+            <CircleBadge className={styles.heroBadge} text="Trusted care · 29+ years · " />
             <div className={styles.heroPill}>
               <span className={styles.heroPillIcon}>
                 <Check width={18} height={18} />
               </span>
               <div>
                 <strong>C K Birla Hospital</strong>
-                <small>Senior Consultant</small>
+                <small>Director</small>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default async function HomePage() {
           {[...Array(2)].map((_, k) => (
             <span key={k}>
               High-Risk Pregnancy <i>✳</i> Painless Delivery <i>✳</i> Laparoscopic Surgery{" "}
-              <i>✳</i> Infertility Care <i>✳</i> PCOS &amp; PCOD <i>✳</i> Robotic Surgery{" "}
+              <i>✳</i> Infertility Care <i>✳</i> PCOS &amp; PCOD <i>✳</i> Robotic Gynae Surgery{" "}
               <i>✳</i>{" "}
             </span>
           ))}
@@ -93,7 +93,7 @@ export default async function HomePage() {
           <div className={styles.aboutMedia}>
             <div className={styles.aboutFrame}>
               <Image
-                src="/images/Dr-Tripti-Raheja-Gynaecologist-in-Delhi-scaled-1.jpg"
+                src="/images/dr-tripti-2.jpeg"
                 alt="Dr. Tripti Raheja, Gynaecologist in Delhi"
                 width={560}
                 height={640}
@@ -115,11 +115,14 @@ export default async function HomePage() {
             </h2>
             <p>
               Dr. Tripti Raheja is a renowned gynecologist, obstetrician, and laparoscopic
-              surgeon with over <strong>28 years of experience</strong>, currently associated
-              with C K Birla Hospital and widely recognised as a trusted gynecologist for
-              normal delivery across North and West Delhi.
+              surgeon with over <strong>29 years of experience</strong>, currently associated
+              with C K Birla Hospital and widely recognised as a trusted gynecologist
+              across North and West Delhi.
             </p>
             <ul className={styles.aboutList}>
+              <li>
+                <span className={styles.tick}><Check width={15} height={15} /></span> MD Obstetrics and Gynaecology
+              </li>
               <li>
                 <span className={styles.tick}><Check width={15} height={15} /></span> Gold Medalist — Lady Hardinge Medical College
               </li>
@@ -127,12 +130,15 @@ export default async function HomePage() {
                 <span className={styles.tick}><Check width={15} height={15} /></span> MRCOG — London
               </li>
               <li>
-                <span className={styles.tick}><Check width={15} height={15} /></span> High-risk pregnancy &amp; advanced surgery
+                <span className={styles.tick}><Check width={15} height={15} /></span> FRCOG — London
+              </li>
+              <li>
+                <span className={styles.tick}><Check width={15} height={15} /></span> High-risk pregnancy &amp; Minimally invasive Gynaecological Surgeries
               </li>
             </ul>
             <div className={styles.signature}>
               <strong>Dr. Tripti Raheja</strong>
-              <span>Senior Consultant Gynaecologist / Obstetrician</span>
+              <span>Director Gynaecologist / Obstetrician</span>
             </div>
             <Link href="/about-us" className="btn btn--navy">
               More About Dr. Tripti <ArrowRight width={18} height={18} />

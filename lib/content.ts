@@ -26,6 +26,46 @@ export const faqs: Faq[] = [
     q: "How can expecting mothers prepare for labor?",
     a: "Expecting mothers can prepare for labor by attending regular prenatal check-ups, maintaining a healthy diet, staying physically active as advised, learning breathing and relaxation techniques, and preparing a hospital bag in advance.",
   },
+  {
+    q: "What diet should I take after c-section?",
+    a: "After a c-section, focus on nutrient-rich foods including proteins, whole grains, fruits, and vegetables to aid healing. Drink plenty of water, avoid heavy or spicy foods initially, and eat smaller, frequent meals. Consult your doctor for personalized dietary recommendations based on your recovery.",
+  },
+  {
+    q: "How to take care of stitches after c-section?",
+    a: "Keep the incision clean and dry, wash gently with soap and water, pat dry with a clean towel, and avoid submerging it in water until fully healed. Wear loose clothing, avoid heavy lifting, and watch for signs of infection like redness, warmth, or discharge. Follow your doctor's wound care instructions carefully.",
+  },
+  {
+    q: "How many days of bed rest is needed after c-section?",
+    a: "Most women need 2-3 weeks of limited activity and bed rest after c-section. However, gentle movement is encouraged from day one. Full recovery typically takes 6-8 weeks. Always follow your doctor's specific recommendations as recovery varies based on individual circumstances.",
+  },
+  {
+    q: "Which technique to choose for fibroid surgery - Laparoscopic or Robotic?",
+    a: "Both laparoscopic and robotic techniques are minimally invasive with faster recovery than open surgery. Robotic surgery offers enhanced precision and visualization, making it ideal for complex cases. Your doctor will recommend the best approach based on fibroid size, location, and your individual health condition.",
+  },
+  {
+    q: "What exercises will help in normal delivery?",
+    a: "Pelvic floor exercises (Kegel exercises), walking, swimming, prenatal yoga, and squats are beneficial during pregnancy. These exercises strengthen muscles needed for delivery, improve circulation, and enhance flexibility. Always consult your doctor before starting any exercise routine during pregnancy.",
+  },
+  {
+    q: "How to differentiate between true labour pains and false pains?",
+    a: "True labour pains occur at regular intervals, gradually become stronger and closer together, and persist regardless of movement. False labour pains (Braxton Hicks) are irregular, often stop with movement, and don't increase in intensity. Contact your doctor if unsure or if pains become severe.",
+  },
+  {
+    q: "What diet should I take after uterus removal?",
+    a: "After uterus removal, eat a balanced diet rich in protein, iron, vitamins, and minerals to support healing. Include whole grains, fruits, vegetables, lean meats, and dairy. Stay hydrated and avoid heavy, greasy, or spicy foods initially. Your doctor may recommend specific nutritional guidelines for your recovery.",
+  },
+  {
+    q: "Does uterus removal affect intimacy?",
+    a: "Uterus removal does not affect the ability to have a satisfying intimate life. Once fully healed (typically 6-8 weeks), intimacy can be resumed. Some women report improved quality of life due to relief from symptoms. Any concerns should be discussed with your doctor.",
+  },
+  {
+    q: "How much time it takes to recover after uterus removal surgery?",
+    a: "Initial recovery takes 2-3 weeks, but complete recovery typically takes 6-8 weeks. Return to light activities gradually, avoid heavy lifting, and follow doctor's guidelines. Robotic or laparoscopic surgery may have faster recovery compared to open surgery. Each woman's recovery is individual.",
+  },
+  {
+    q: "Why is robotic technique preferred by patients for uterus removal?",
+    a: "Robotic technique offers enhanced precision, smaller incisions, reduced blood loss, and faster recovery compared to traditional open surgery. Patients experience less pain, shorter hospital stays, and quicker return to normal activities. The advanced visualization allows surgeons to perform complex procedures with greater accuracy.",
+  },
 ];
 
 export type Review = { name: string; text: string; rating: number };
@@ -53,6 +93,21 @@ export const reviews: Review[] = [
     rating: 5,
     text: "I consulted Dr. Tripti for infertility and today I am a happy mother. Her expertise and positivity made all the difference in our journey.",
   },
+  {
+    name: "Anmol Madan",
+    rating: 5,
+    text: "My mother had been suffering from heavy menstrual bleeding for almost 15–20 days. After proper consultation, the doctor advised Mirena insertion, which was performed smoothly and successfully. We are very satisfied with the treatment and care provided.",
+  },
+  {
+    name: "Vikash Mishra",
+    rating: 5,
+    text: "We visited Dr. Tripti for my sister's heavy bleeding issues. Dr Tripti suggested Robotic surgery to remove uterus, the surgery went well and she got discharged the second day feeling better now. She is very polite and supportive. Thanks to her.",
+  },
+  {
+    name: "Sanyam Bansal",
+    rating: 5,
+    text: "I am undergoing treatment with Dr. Tripti for my delivery and fibroid treatment. My overall experience has been very good. Because of her guidance and treatment, both me and my baby are doing very well.",
+  },
 ];
 
 // Testimonial videos (also shown on the home page).
@@ -61,6 +116,8 @@ export const testimonialVideos = [
   "Wq4RO-BRhU0",
   "sIunEIgG7fU",
   "zHGbdUq6NG8",
+  "nJGCggBvvF4",
+  "hZ7T4BbfoXc",
 ];
 
 // Video gallery — same order as the live site's video gallery page.

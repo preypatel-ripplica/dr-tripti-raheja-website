@@ -9,40 +9,44 @@ import styles from "./about.module.css";
 export const metadata: Metadata = {
   title: "About Dr. Tripti Raheja",
   description:
-    "Dr. Tripti Raheja is a Senior Consultant Gynecologist/Obstetrician at C K Birla Hospital, Punjabi Bagh with 28+ years of experience.",
+    "Dr. Tripti Raheja is a Senior Consultant Gynecologist/Obstetrician at C K Birla Hospital, Punjabi Bagh with 29+ years of experience.",
 };
 
 const qualifications = [
   { degree: "MBBS", year: "1997", place: "Sardar Patel Medical College, Bikaner" },
   { degree: "MD / MS — Obstetrics & Gynaecology", year: "2000", place: "Lady Hardinge Medical College, New Delhi" },
-  { degree: "MRCOG (UK)", year: "2008", place: "Royal College of Obstetricians and Gynaecologists, London" },
+  { degree: "MRCOG (LONDON)", year: "2008", place: "Royal College of Obstetricians and Gynaecologists, London" },
+  { degree: "FRCOG (LONDON)", year: "2021", place: "Royal College of Obstetricians and Gynaecologists, London" },
 ];
 
-const clinicalExpertise = [
-  "Well-Woman Examination",
-  "Pap Smear and HPV Testing",
-  "Breast Examination",
-  "Contraceptive Counseling",
-  "Prenatal Care",
-  "Obstetric Ultrasound",
-];
-
-const surgicalExpertise = [
-  "High Risk Pregnancies",
-  "Infertility Treatment",
-  "Bad Obstetric History",
-  "Laparoscopic Surgeries",
-  "Gynecological Surgeries",
-  "Hysteroscopy Surgeries",
+const services = [
+  "Robotic Gynae Surgeries",
+  "Complex Laparoscopic and Hysteroscopic Surgeries",
+  "Pregnancy care including High Risk Pregnancies",
+  "Painless Birthing",
+  "Cesarean section",
+  "Fibroid Uterus",
+  "Endometriosis",
+  "Infertility",
+  "Vaginal surgeries",
+  "Abdominal/ Open Gynae Surgeries",
+  "Ovarian Cyst",
+  "Obstetric Emergencies",
+  "HPV vaccination & Adolescent health",
+  "Abortion care",
+  "Uterus Prolapse",
+  "Menstrual Disorders",
+  "PCOS/ PMOS",
+  "Menopause",
 ];
 
 const highlights = [
   {
     title: "Professional Experience",
     items: [
-      "Senior Consultant, C K Birla Hospital, Punjabi Bagh",
-      "Formerly Sr. Consultant, Max Hospital, Pitampura, Delhi",
-      "Extensive teaching & surgical experience in Obs. & Gynae.",
+      "Director, CK Birla Hospital Punjabi Bagh, Delhi",
+      "Formerly- Director Obstetrics and Gynaecology Fortis Hospital Shalimar Bagh",
+      "Max Hospital Pitampura and Shalimar Bagh",
     ],
   },
   {
@@ -57,7 +61,11 @@ const highlights = [
     title: "Certifications & Memberships",
     items: [
       "Life Member, Association of Obstetricians & Gynaecologists of Delhi (AOGD)",
+      "Life member of Federation of obs and Gynaecological societies of India",
       "MRCOG — Royal College of Obstetricians & Gynaecologists, London",
+      "Fellow of Royal college of obstetrics and Gynaecology London",
+      "Certificate course in Laparoscopic Surgery from Indian Institute of Laparoscopic Surgery at VG Hospital Coimbatore",
+      "Certified Da Vinci Robotic Console Surgeon",
       "Regular participant in workshops & CMEs",
     ],
   },
@@ -69,7 +77,7 @@ export default function AboutPage() {
       <PageHero
         title="About Dr. Tripti Raheja"
         breadcrumb="About Us"
-        subtitle="Your trusted partner in gynecological care — compassionate expertise built over 28+ years."
+        subtitle="Your trusted partner in gynecological care — compassionate expertise built over 29+ years."
       />
 
       {/* Intro */}
@@ -96,9 +104,8 @@ export default function AboutPage() {
             <span className="eyebrow">About the Doctor</span>
             <h2>Your Trusted Partner in Gynecological Care</h2>
             <p>
-              Dr. Tripti Raheja is a Senior Consultant Gynecologist/Obstetrician at
-              C K Birla Hospital, Punjabi Bagh. Dr. Tripti never misses an
-              opportunity to attend conferences, workshops and seminars, be it at the
+              Dr. Tripti Raheja is a Director Obestrics and Gynecologist at
+              C K Birla Hospital, Punjabi Bagh. Dr. Tripti has been invited as faculty to various conferencess, be it at the
               national or international level. She treats her patients warm-heartedly
               and listens to their concerns attentively. Only after a thorough
               discussion does she devise the treatment plan.
@@ -153,14 +160,7 @@ export default function AboutPage() {
           </div>
           <div className={styles.expertiseCols}>
             <ul className={styles.expList}>
-              {clinicalExpertise.map((e) => (
-                <li key={e}>
-                  <Check width={18} height={18} /> {e}
-                </li>
-              ))}
-            </ul>
-            <ul className={styles.expList}>
-              {surgicalExpertise.map((e) => (
+              {services.map((e) => (
                 <li key={e}>
                   <Check width={18} height={18} /> {e}
                 </li>
