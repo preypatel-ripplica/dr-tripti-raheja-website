@@ -16,7 +16,6 @@ export const site = {
 export const contact = {
   phones: ["+91-96676 94000", "+91-92661 22400"],
   phonePrimary: "9667694000",
-  landline: "011-27444169",
   clinic: {
     name: "Raheja Clinic",
     address:
@@ -27,11 +26,11 @@ export const contact = {
     name: "C K Birla Hospital – Punjabi Bagh",
   },
   timings: [
-    { place: "Raheja Clinic", days: "Mon – Sat", time: "06:00 PM – 08:00 PM" },
+    { place: "Raheja Clinic", days: "Mon – Sat", time: "4:30 PM – 7:30 PM" },
     {
       place: "C K Birla Hospital, Punjabi Bagh",
       days: "Mon – Sat",
-      time: "10:00 AM – 03:00 PM",
+      time: "10:00 AM – 4:00 PM",
     },
   ],
   mapEmbed:
@@ -95,32 +94,32 @@ export const services: Service[] = [
     title: "High Risk Pregnancy",
     excerpt:
       "During the 9 months of your pregnancy you are supported and provided evidence based care. You can also join our antenatal classes, considered one of the best in Delhi.",
-    image: "/images/WhatsApp-Image-2026-03-28-at-9.25.06-AM-rl5rgf0jrnqmmau5uzklrcxawuqko7mhfk4a51ct5s.jpeg",
+    image: "/images/pregnant_woman.png",
   },
   {
     slug: "laparoscopic-surgery",
     title: "Laparoscopic Surgery",
     excerpt:
       "Laparoscopy is a minimally invasive surgical procedure used to diagnose and treat several conditions in the abdominal and pelvic areas, offering a clear view of internal organs.",
-    image: "/images/WhatsApp-Image-2026-03-28-at-9.11.18-AM-rl5rgfydyhrwxwssphz8buori8lxvwq7rorrmbbezk.jpeg",
+    image: "/images/WhatsApp-Image-2026-03-28-at-9.25.06-AM-rl5rgf0jrnqmmau5uzklrcxawuqko7mhfk4a51ct5s.jpeg",
   },
   {
     slug: "hysteroscopy-treatment",
     title: "Hysteroscopy Surgery",
     excerpt:
       "Hysteroscopy lets your doctor look inside your uterus using a narrow tube-like instrument called a hysteroscope, about 3 to 5 millimetres in diameter.",
-    image: "/images/4-rjwugqsswacjd4jg567dnddxdqnvhcbhqj2zcydsio.png",
+    image: "/images/WhatsApp-Image-2026-03-28-at-9.11.18-AM-rl5rgfydyhrwxwssphz8buori8lxvwq7rorrmbbezk.jpeg",
   },
   {
     slug: "infertility-treatment",
     title: "Infertility Treatment",
     excerpt:
       "Advanced, compassionate care for fibroids and infertility. Fibroids are non-cancerous tumors of the female reproductive system that grow from the muscle layer of the uterus.",
-    image: "/images/1-rjwufsym2927r5wlmrkt5lxbzvans8l5lvli2zryqo.png",
+    image: "/images/Infertility-Treatment.jpeg",
   },
   {
     slug: "robotic-gynaecologic-surgery",
-    title: "Robotic Gynaecologic Surgery",
+    title: "Robotic Gynae Surgery",
     excerpt:
       "An advanced, minimally invasive technique that allows surgeons to perform highly precise and complex procedures using a robotic-assisted system such as the da Vinci Surgical System.",
     image: "/images/23-rl5uj6c5d368ve9btvflyxmiwna103ixodjb7c0blo.jpg",
@@ -128,10 +127,10 @@ export const services: Service[] = [
 ];
 
 export const stats = [
-  { value: "10K+", label: "Happy Patients" },
-  { value: "28+", label: "Years Experience" },
-  { value: "11K+", label: "Deliveries" },
-  { value: "50K+", label: "Consultations" },
+  { value: "100K+", label: "Happy Patients" },
+  { value: "29+", label: "Years Experience" },
+  { value: "50K+", label: "Safe Deliveries" },
+  { value: "10K+", label: "Surgeries" },
 ];
 
 export function getDefaultNav(): NavItem[] {

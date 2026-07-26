@@ -63,7 +63,7 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
 
           <ul className={styles.points}>
             <li>
-              <Check width={18} height={18} /> 28+ years of clinical experience
+              <Check width={18} height={18} /> 29+ years of clinical experience
             </li>
             <li>
               <Check width={18} height={18} /> Compassionate, patient-first care
@@ -81,6 +81,15 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
               <span>
                 <small>For Appointments</small>
                 {contact.phones[0]}
+              </span>
+            </a>
+            <a href={`tel:${contact.phones[1].replace(/[^\d]/g, "")}`} className={styles.contactItem}>
+              <span className={styles.contactIcon}>
+                <Phone width={18} height={18} />
+              </span>
+              <span>
+                <small>Alternate</small>
+                {contact.phones[1]}
               </span>
             </a>
             <div className={styles.contactItem}>

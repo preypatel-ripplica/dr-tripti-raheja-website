@@ -173,11 +173,28 @@
     gap: 36px;
   }
 }
+@media (max-width: 600px) {
+  .contactRow {
+    gap: 16px;
+  }
+  .contactItem {
+    flex: 1;
+    min-width: 150px;
+  }
+}
 @media (max-width: 480px) {
   .two {
     grid-template-columns: 1fr;
   }
   .card {
     padding: 24px;
+  }
+  .contactRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .contactItem {
+    width: 100%;
+    min-width: unset;
   }
 }

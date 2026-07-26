@@ -18,7 +18,7 @@ export default function Footer() {
             className={styles.logo}
           />
           <p className={styles.tagline}>
-            Senior Consultant Gynecologist &amp; Obstetrician with 28+ years of
+            Senior Consultant Gynecologist &amp; Obstetrician with 29+ years of
             experience, dedicated to compassionate women&apos;s healthcare.
           </p>
           <div className={styles.socials}>
