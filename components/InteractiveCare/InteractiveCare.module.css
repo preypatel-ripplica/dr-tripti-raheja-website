@@ -382,6 +382,13 @@
   gap: 14px;
   padding-top: 6px;
 }
+.ctaPair {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 
 .stepActions button:disabled,
 .treatmentActions button:disabled {
@@ -1023,6 +1030,8 @@
   .stepActions :global(.btn),
   .treatmentActions :global(.btn),
   .plannerActions :global(.btn),
+  .ctaPair,
+  .ctaPair :global(.btn),
   .backButton {
     width: 100%;
   }

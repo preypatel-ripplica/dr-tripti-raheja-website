@@ -1,20 +1,48 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import styles from "./page.module.css";
 import { services, stats, contact } from "@/lib/site";
 import { faqs, reviews, reviewsSummary, testimonialVideos } from "@/lib/content";
-import { getBlogPosts } from "@/lib/cms";
+import JsonLd from "@/components/JsonLd";
 import Appointment from "@/components/Appointment/Appointment";
 import Faq from "@/components/Faq/Faq";
 import VideoCard from "@/components/VideoCard/VideoCard";
 import CircleBadge from "@/components/CircleBadge/CircleBadge";
 import { ConcernGuide, ConsultationPrepKit } from "@/components/InteractiveCare/InteractiveCare";
 import { Star, ArrowRight, Check, Quote, Phone } from "@/components/Icons";
+import { breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 
-export default async function HomePage() {
-  const blogPosts = await getBlogPosts();
+export const metadata: Metadata = pageMetadata({
+  title: "Best Gynecologist in North Delhi & West Delhi | Dr. Tripti Raheja",
+  description:
+    "Consult Dr. Tripti Raheja, Director of Obstetrics and Gynaecology at CK Birla Hospital Punjabi Bagh, Delhi, for pregnancy care, infertility, laparoscopy, hysteroscopy and robotic gynae surgery.",
+  path: "/",
+});
+
+export default function HomePage() {
   return (
     <>
+      <link
+        rel="preload"
+        as="image"
+        href="/images/optimized/dr-tripti-hero-640.jpg"
+        media="(max-width: 780px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/images/optimized/dr-tripti-hero-960.jpg"
+        media="(min-width: 781px)"
+        fetchPriority="high"
+      />
+      <JsonLd
+        data={[
+          breadcrumbSchema([{ name: "Home", path: "/" }]),
+          faqSchema(faqs),
+        ]}
+      />
       {/* ============================ HERO ============================ */}
       <section className={styles.hero}>
         <div className={`container ${styles.heroInner}`}>
@@ -24,17 +52,19 @@ export default async function HomePage() {
               Where women&apos;s health is met with <span className="accent-italic">compassionate</span> care<span className="ast">✳</span>
             </h1>
             <p className={styles.heroLead}>
-              Dr. Tripti Raheja — Director Gynaecologist &amp; Obstetrician with
+              Dr. Tripti Raheja, Director of Obstetrics and Gynaecology with
               29+ years of experience in safe deliveries, high-risk pregnancy and advanced
               laparoscopic surgery.
             </p>
             <div className={styles.heroCtas}>
-              <Link href="/contact-us" className="btn btn--primary">
+              <a href={contact.appointmentUrl} className="btn btn--primary" target="_blank" rel="noopener noreferrer">
                 Book a Consultation <ArrowRight width={18} height={18} />
-              </Link>
-              <a href={`tel:${contact.phonePrimary}`} className="btn btn--outline">
-                <Phone width={17} height={17} /> {contact.phones[0]}
               </a>
+              {contact.phones.map((phone) => (
+                <a key={phone} href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="btn btn--outline">
+                  <Phone width={17} height={17} /> {phone}
+                </a>
+              ))}
             </div>
             <div className={styles.heroTrust}>
               <div className={styles.stars}>
@@ -50,14 +80,20 @@ export default async function HomePage() {
 
           <div className={styles.heroMedia}>
             <div className={styles.heroFrame}>
-              <Image
-                src="/images/Dr-Tripti-Raheja-Gynaecologist-in-Delhi-scaled-1.jpg"
-                alt="Dr. Tripti Raheja — Best Gynecologist in Delhi"
-                fill
-                sizes="(max-width: 900px) 100vw, 46vw"
-                priority
-                className={styles.cover}
-              />
+              <picture className={styles.heroPicture}>
+                <source media="(max-width: 780px)" srcSet="/images/optimized/dr-tripti-hero-640.jpg" />
+                <source media="(min-width: 781px)" srcSet="/images/optimized/dr-tripti-hero-960.jpg" />
+                <img
+                  src="/images/optimized/dr-tripti-hero-640.jpg"
+                  alt="Dr. Tripti Raheja, Best Gynecologist in Delhi"
+                  width={640}
+                  height={800}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="sync"
+                  className={styles.cover}
+                />
+              </picture>
             </div>
             <span className={styles.heroOutline} aria-hidden />
             <CircleBadge className={styles.heroBadge} text="Trusted care · 29+ years · " />
@@ -77,7 +113,7 @@ export default async function HomePage() {
       {/* ============================ MARQUEE ============================ */}
       <div className={styles.marquee} aria-hidden>
         <div className={styles.marqueeTrack}>
-          {[...Array(2)].map((_, k) => (
+          {[...Array(4)].map((_, k) => (
             <span key={k}>
               High-Risk Pregnancy <i>✳</i> Painless Delivery <i>✳</i> Laparoscopic Surgery{" "}
               <i>✳</i> Infertility Care <i>✳</i> PCOS &amp; PCOD <i>✳</i> Robotic Gynae Surgery{" "}
@@ -103,7 +139,7 @@ export default async function HomePage() {
             <div className={styles.aboutQuote}>
               <Quote width={24} height={24} />
               <p>
-                Empowering women to take control of their health — making informed
+                Empowering women to take control of their health, making informed
                 decisions that lead to happier, healthier lives.
               </p>
             </div>
@@ -115,22 +151,22 @@ export default async function HomePage() {
             </h2>
             <p>
               Dr. Tripti Raheja is a renowned gynecologist, obstetrician, and laparoscopic
-              surgeon with over <strong>29 years of experience</strong>, currently associated
-              with C K Birla Hospital and widely recognised as a trusted gynecologist
-              across North and West Delhi.
+              surgeon with over <strong>29 years of experience</strong>. Currently working
+              as Director of Obstetrics and Gynaecology in CK Birla Hospital Punjabi Bagh,
+              Delhi, she is widely recognised as a trusted gynecologist across North and West Delhi.
             </p>
             <ul className={styles.aboutList}>
               <li>
                 <span className={styles.tick}><Check width={15} height={15} /></span> MD Obstetrics and Gynaecology
               </li>
               <li>
-                <span className={styles.tick}><Check width={15} height={15} /></span> Gold Medalist — Lady Hardinge Medical College
+                <span className={styles.tick}><Check width={15} height={15} /></span> Gold Medalist, Lady Hardinge Medical College
               </li>
               <li>
-                <span className={styles.tick}><Check width={15} height={15} /></span> MRCOG — London
+                <span className={styles.tick}><Check width={15} height={15} /></span> MRCOG, London
               </li>
               <li>
-                <span className={styles.tick}><Check width={15} height={15} /></span> FRCOG — London
+                <span className={styles.tick}><Check width={15} height={15} /></span> FRCOG, London
               </li>
               <li>
                 <span className={styles.tick}><Check width={15} height={15} /></span> High-risk pregnancy &amp; Minimally invasive Gynaecological Surgeries
@@ -138,7 +174,7 @@ export default async function HomePage() {
             </ul>
             <div className={styles.signature}>
               <strong>Dr. Tripti Raheja</strong>
-              <span>Director Gynaecologist / Obstetrician</span>
+              <span>Director of Obstetrics and Gynaecology</span>
             </div>
             <Link href="/about-us" className="btn btn--navy">
               More About Dr. Tripti <ArrowRight width={18} height={18} />
@@ -180,12 +216,16 @@ export default async function HomePage() {
               <Link
                 key={s.slug}
                 href={`/${s.slug}`}
-                className={`${styles.bentoCard} ${i === 0 ? styles.bentoLarge : ""} ${
-                  i === 3 ? styles.bentoNavy : ""
-                }`}
+                className={`${styles.bentoCard} ${i === 0 ? styles.bentoLarge : ""}`}
               >
                 <div className={styles.bentoImg}>
-                  <Image src={s.image} alt={s.title} fill sizes="(max-width: 700px) 100vw, 40vw" className={styles.cover} />
+                  <Image
+                    src={s.image}
+                    alt={s.title}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 40vw"
+                    className={`${styles.cover} ${i === 0 ? styles.highRiskImage : ""}`}
+                  />
                 </div>
                 <div className={styles.bentoBody}>
                   <h3>{s.title}</h3>
@@ -294,54 +334,6 @@ export default async function HomePage() {
 
       {/* ============================ APPOINTMENT ============================ */}
       <Appointment />
-
-      {/* ============================ BLOG ============================ */}
-      <section className={`section ${styles.blog}`}>
-        <div className="container">
-          <div className={styles.blogHead}>
-            <div>
-              <span className="eyebrow">From the Journal</span>
-              <h2>Posts &amp; articles</h2>
-            </div>
-            <Link href="/blogs" className="btn btn--outline">
-              See All Posts <ArrowRight width={18} height={18} />
-            </Link>
-          </div>
-          <div className={styles.blogGrid}>
-            {blogPosts.slice(0, 2).map((post) => (
-              <article key={post.slug} className={styles.blogCard}>
-                <div className={styles.blogImg}>
-                  <Image src={post.image} alt={post.title} fill sizes="(max-width: 700px) 100vw, 45vw" className={styles.cover} />
-                </div>
-                <div className={styles.blogBody}>
-                  <h3>{post.title}</h3>
-                  <p>{post.excerpt}</p>
-                  <Link href={`/blogs/${post.slug}/`} className={styles.arrowLink}>
-                    Read More <ArrowRight width={16} height={16} />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ======================= CLOSING BAND ======================= */}
-      <section className={styles.closing}>
-        <div className={`container ${styles.closingInner}`}>
-          <span className="eyebrow" style={{ color: "var(--blush)" }}>Cashless &amp; Insurance</span>
-          <h2>
-            Insurance approved <span className="accent-italic">consultant</span>
-          </h2>
-          <p>
-            Consultations and procedures are available with leading health insurance and TPA
-            partners. Contact the clinic to confirm your coverage and cashless eligibility.
-          </p>
-          <Link href="/contact-us" className="btn btn--light">
-            Check Your Coverage <ArrowRight width={18} height={18} />
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

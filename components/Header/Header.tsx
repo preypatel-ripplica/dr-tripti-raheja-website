@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -29,17 +30,42 @@ export default function Header({ nav }: { nav: NavItem[] }) {
   const isActive = (href: string) =>
     href !== "#" && (pathname === href || (href !== "/" && pathname.startsWith(href)));
 
+  const scrollToEnquiry = (event: MouseEvent<HTMLAnchorElement>) => {
+    const section = document.getElementById("appointment");
+    if (!section) return;
+
+    event.preventDefault();
+    setOpen(false);
+    setOpenGroup(null);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <header className={styles.header}>
       {/* Top utility bar */}
       <div className={styles.topbar}>
         <div className={`container ${styles.topInner}`}>
           <div className={styles.topContact}>
-            <a href={`tel:${contact.phonePrimary}`} className={styles.topItem}>
-              <Phone width={15} height={15} />
-              <span>{contact.phones[0]}</span>
-            </a>
-            <a href="/contact-us" className={styles.topItem}>
+            <div className={styles.topPhoneGroup} aria-label="Appointment phone numbers">
+              {contact.phones.map((phone) => (
+                <a
+                  key={phone}
+                  href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                  className={styles.topItem}
+                  aria-label={`Call ${phone}`}
+                >
+                  <Phone width={15} height={15} />
+                  <span>{phone}</span>
+                </a>
+              ))}
+            </div>
+            <a
+              href={contact.appointmentUrl}
+              className={styles.topItem}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book an appointment"
+            >
               <Mail width={15} height={15} />
               <span>Book an appointment</span>
             </a>
@@ -60,13 +86,14 @@ export default function Header({ nav }: { nav: NavItem[] }) {
       {/* Main bar */}
       <div className={styles.mainbar}>
         <div className={`container ${styles.mainInner}`}>
-          <Link href="/" className={styles.brand} aria-label="Dr. Tripti Raheja — Home">
+          <Link href="/" className={styles.brand} aria-label="Dr. Tripti Raheja Home">
             <Image
               src="/images/Dr-Tripti-Raheja-logo-1.png"
               alt="Dr. Tripti Raheja"
               width={190}
               height={50}
-              priority
+              loading="eager"
+              fetchPriority="low"
             />
           </Link>
 
@@ -100,9 +127,9 @@ export default function Header({ nav }: { nav: NavItem[] }) {
             </ul>
           </nav>
 
-          <Link href="/contact-us" className={`btn btn--primary ${styles.cta}`}>
+          <a href="#appointment" className={`btn btn--primary ${styles.cta}`} onClick={scrollToEnquiry}>
             Make an Enquiry
-          </Link>
+          </a>
 
           <button
             type="button"
@@ -161,9 +188,9 @@ export default function Header({ nav }: { nav: NavItem[] }) {
               )
             )}
           </ul>
-          <Link href="/contact-us" className="btn btn--primary" style={{ width: "100%", marginTop: 20 }}>
+          <a href="#appointment" className="btn btn--primary" style={{ width: "100%", marginTop: 20 }} onClick={scrollToEnquiry}>
             Make an Enquiry <ArrowRight width={18} height={18} />
-          </Link>
+          </a>
         </nav>
       </div>
       {open && <div className={styles.backdrop} onClick={() => setOpen(false)} />}

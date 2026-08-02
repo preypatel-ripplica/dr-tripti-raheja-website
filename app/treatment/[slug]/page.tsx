@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ServiceLayout from "@/components/ServiceLayout/ServiceLayout";
 import { getServiceContent, getServiceContentBySlug } from "@/lib/cms";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const treatments = await getServiceContent();
@@ -13,7 +14,12 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const content = await getServiceContentBySlug(params.slug);
-  return { title: content.title, description: content.subtitle };
+  return pageMetadata({
+    title: content.title,
+    description: content.subtitle || `${content.title} with Dr. Tripti Raheja in Delhi.`,
+    path: `/treatment/${params.slug}/`,
+    image: content.heroImage,
+  });
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {

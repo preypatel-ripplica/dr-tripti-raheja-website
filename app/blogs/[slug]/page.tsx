@@ -4,8 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Appointment from "@/components/Appointment/Appointment";
 import Faq from "@/components/Faq/Faq";
+import JsonLd from "@/components/JsonLd";
 import { getBlogPosts } from "@/lib/cms";
 import { ArrowRight } from "@/components/Icons";
+import { blogPostingSchema, breadcrumbSchema, faqSchema, pageMetadata } from "@/lib/seo";
 import styles from "./blogPost.module.css";
 
 export async function generateStaticParams() {
@@ -17,20 +19,23 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const blogPosts = await getBlogPosts();
   const post = blogPosts.find((p) => p.slug === params.slug);
   if (!post) return {};
-  return {
+  return pageMetadata({
     title: post.seoTitle || post.title,
     description: post.metaDescription || post.excerpt,
+    path: `/blogs/${post.slug}/`,
+    image: post.image,
+    type: "article",
     keywords: post.keywords?.length ? post.keywords : undefined,
-  };
+  });
 }
 
-// Bullets use "Label — text" form; bold the label part when present.
+// Bullets use a "Label, text" or legacy label separator form; bold the label part when present.
 function Bullet({ text }: { text: string }) {
-  const split = text.indexOf(" — ");
+  const split = text.indexOf(" \u2014 ");
   if (split === -1) return <li>{text}</li>;
   return (
     <li>
-      <strong>{text.slice(0, split)}</strong> — {text.slice(split + 3)}
+      <strong>{text.slice(0, split)}</strong>: {text.slice(split + 3)}
     </li>
   );
 }
@@ -44,6 +49,17 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blogs", path: "/blogs/" },
+            { name: post.title, path: `/blogs/${post.slug}/` },
+          ]),
+          blogPostingSchema(post),
+          ...(post.faqs?.length ? [faqSchema(post.faqs)] : []),
+        ]}
+      />
       {/* ============================ HERO ============================ */}
       <section className={styles.hero}>
         <div className={`container ${styles.heroGrid}`}>

@@ -3,8 +3,11 @@ import { Fraunces, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import JsonLd from "@/components/JsonLd";
+import GoogleAnalytics from "@/components/Analytics/GoogleAnalytics";
 import { site, getDefaultNav, type NavItem } from "@/lib/site";
 import { getTreatmentMenuItems } from "@/lib/cms";
+import { absoluteUrl, defaultOgImage, physicianSchema, websiteSchema } from "@/lib/seo";
 
 // Editorial display serif (see DESIGN_TASTE.md). Optical sizing + italics for warmth.
 const fraunces = Fraunces({
@@ -30,11 +33,28 @@ export const metadata: Metadata = {
   },
   description: site.description,
   metadataBase: new URL(site.url),
+  applicationName: site.name,
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title: site.title,
     description: site.description,
     type: "website",
     url: site.url,
+    siteName: site.name,
+    locale: "en_IN",
+    images: [{ url: absoluteUrl(defaultOgImage) }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.title,
+    description: site.description,
+    images: [absoluteUrl(defaultOgImage)],
   },
 };
 
@@ -60,6 +80,8 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body>
+        <GoogleAnalytics />
+        <JsonLd data={[websiteSchema(), physicianSchema()]} />
         <Header nav={nav} />
         <main>{children}</main>
         <Footer />

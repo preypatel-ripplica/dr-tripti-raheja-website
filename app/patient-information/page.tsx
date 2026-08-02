@@ -4,13 +4,16 @@ import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
 import { PatientVisitPlanner } from "@/components/InteractiveCare/InteractiveCare";
 import { Check } from "@/components/Icons";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./patient.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Patient Information",
   description:
-    "Helpful information for patients — clinic facilities, consultations and what to expect at Dr. Tripti Raheja's clinic.",
-};
+    "Helpful information for patients, including clinic facilities, consultations and what to expect at Dr. Tripti Raheja's clinic.",
+  path: "/patient-information/",
+  image: "/images/122.jpg",
+});
 
 const consultationPoints = [
   "Keeping strict ethical standards",
@@ -38,7 +41,7 @@ export default function PatientInfoPage() {
       <PageHero
         title="Patient Information"
         breadcrumb="Patient Information"
-        subtitle="Everything you need to know before your visit — our care, facilities and guidance."
+        subtitle="Everything you need to know before your visit, including our care, facilities and guidance."
       />
 
       <section className="section">
@@ -54,7 +57,7 @@ export default function PatientInfoPage() {
               during pregnancy as part of living a healthy lifestyle. In most cases,
               moderate physical activity during pregnancy is safe and can have
               benefits for both you and your baby, and should not harm either of you.
-              However, you do need to take some sensible precautions — which we&apos;ll
+              However, you do need to take some sensible precautions, which we&apos;ll
               guide you through at every step.
             </p>
             <p>

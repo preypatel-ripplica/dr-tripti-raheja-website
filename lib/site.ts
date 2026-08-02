@@ -9,13 +9,15 @@ export const site = {
   tagline: "Senior Consultant Gynecologist / Obstetrician",
   title: "Best Gynecologist in North Delhi & West Delhi | Dr. Tripti Raheja",
   description:
-    "Dr. Tripti Raheja is a renowned gynecologist, obstetrician and laparoscopic surgeon with 28+ years of experience in women's healthcare, associated with C K Birla Hospital, Punjabi Bagh.",
+    "Dr. Tripti Raheja is a renowned gynecologist, obstetrician and laparoscopic surgeon with 29+ years of experience in women's healthcare, working as Director of Obstetrics and Gynaecology in CK Birla Hospital Punjabi Bagh, Delhi.",
   url: "https://www.drtriptiraheja.com",
 };
 
 export const contact = {
   phones: ["+91-96676 94000", "+91-92661 22400"],
   phonePrimary: "9667694000",
+  appointmentUrl:
+    "https://book.healthplix.com/dr-tripti-raheja-gynaecologist-single-storey-",
   clinic: {
     name: "Raheja Clinic",
     address:
@@ -94,7 +96,7 @@ export const services: Service[] = [
     title: "High Risk Pregnancy",
     excerpt:
       "During the 9 months of your pregnancy you are supported and provided evidence based care. You can also join our antenatal classes, considered one of the best in Delhi.",
-    image: "/images/pregnant_woman.png",
+    image: "/images/high-risk-pregnancy.jpeg",
   },
   {
     slug: "laparoscopic-surgery",

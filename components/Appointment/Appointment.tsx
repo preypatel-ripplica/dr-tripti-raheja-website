@@ -24,7 +24,7 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     formData.append("access_key", WEB3FORMS_KEY);
-    formData.append("subject", "New appointment request — drtriptiraheja.com");
+    formData.append("subject", "New enquiry request from drtriptiraheja.com");
     formData.append("from_name", "Dr. Tripti Raheja Website");
 
     setSending(true);
@@ -74,11 +74,14 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
           </ul>
 
           <div className={styles.contactRow}>
+            <a href={contact.appointmentUrl} className={styles.bookItem} target="_blank" rel="noopener noreferrer">
+              Book Appointment
+            </a>
             <a href={`tel:${contact.phonePrimary}`} className={styles.contactItem}>
               <span className={styles.contactIcon}>
                 <Phone width={18} height={18} />
               </span>
-              <span>
+              <span className={styles.contactText}>
                 <small>For Appointments</small>
                 {contact.phones[0]}
               </span>
@@ -87,7 +90,7 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
               <span className={styles.contactIcon}>
                 <Phone width={18} height={18} />
               </span>
-              <span>
+              <span className={styles.contactText}>
                 <small>Alternate</small>
                 {contact.phones[1]}
               </span>
@@ -96,7 +99,7 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
               <span className={styles.contactIcon}>
                 <MapPin width={18} height={18} />
               </span>
-              <span>
+              <span className={styles.contactText}>
                 <small>Visit us at</small>
                 {contact.clinic.name}, New Delhi
               </span>
@@ -115,8 +118,8 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
             </div>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>
-              <h3 className={styles.formTitle}>Request a Call Back</h3>
-              {/* Web3Forms honeypot — hidden from real visitors, catches bots */}
+              <h3 className={styles.formTitle}>Make an Enquiry</h3>
+              {/* Web3Forms honeypot, hidden from real visitors and catches bots */}
               <input
                 type="checkbox"
                 name="botcheck"
@@ -167,7 +170,7 @@ export default function Appointment({ id = "appointment" }: { id?: string }) {
                 style={{ width: "100%" }}
                 disabled={sending}
               >
-                {sending ? "Sending..." : "Book an Appointment"}
+                {sending ? "Sending..." : "Send Enquiry"}
               </button>
             </form>
           )}

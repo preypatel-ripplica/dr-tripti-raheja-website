@@ -652,9 +652,14 @@ export function ConcernGuide() {
                 Back
               </button>
               {submitted ? (
-                <a href={`tel:${contact.phonePrimary}`} className="btn btn--primary">
-                  Call clinic <Phone width={18} height={18} />
-                </a>
+                <div className={styles.ctaPair}>
+                  <a href={contact.appointmentUrl} className="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                    Book appointment <ArrowRight width={18} height={18} />
+                  </a>
+                  <a href={`tel:${contact.phonePrimary}`} className="btn btn--outline">
+                    Call clinic <Phone width={18} height={18} />
+                  </a>
+                </div>
               ) : step < 2 ? (
                 <button type="button" className="btn btn--primary" onClick={goNext} disabled={!canContinue}>
                   Continue <ArrowRight width={18} height={18} />
@@ -831,9 +836,14 @@ export function ConsultationPrepKit() {
                   {step === prepSteps.length - 2 ? "Show note" : "Next step"} <ArrowRight width={18} height={18} />
                 </button>
               ) : (
-                <a href={`tel:${contact.phonePrimary}`} className="btn btn--primary">
-                  Call clinic <Phone width={18} height={18} />
-                </a>
+                <div className={styles.ctaPair}>
+                  <a href={contact.appointmentUrl} className="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                    Book appointment <ArrowRight width={18} height={18} />
+                  </a>
+                  <a href={`tel:${contact.phonePrimary}`} className="btn btn--outline">
+                    Call clinic <Phone width={18} height={18} />
+                  </a>
+                </div>
               )}
             </div>
           </div>
@@ -924,9 +934,14 @@ export function TreatmentJourneyWidget({ slug }: { slug: string }) {
               Next step <ArrowRight width={18} height={18} />
             </button>
           ) : (
-            <a href={`tel:${contact.phonePrimary}`} className="btn btn--primary">
-              Call clinic <Phone width={18} height={18} />
-            </a>
+            <div className={styles.ctaPair}>
+              <a href={contact.appointmentUrl} className="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                Book appointment <ArrowRight width={18} height={18} />
+              </a>
+              <a href={`tel:${contact.phonePrimary}`} className="btn btn--outline">
+                Call clinic <Phone width={18} height={18} />
+              </a>
+            </div>
           )}
         </div>
       </div>

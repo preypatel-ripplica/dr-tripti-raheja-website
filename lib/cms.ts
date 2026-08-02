@@ -2,7 +2,7 @@
 // CMS connector. Fetches the `blogs`, `treatment` and `video` collections at
 // build time (the site is statically exported) and falls back to the local
 // data in lib/content.ts / lib/serviceContent.ts when the CMS is not
-// configured, unreachable, or a collection is still empty — so the site always
+// configured, unreachable, or a collection is still empty, so the site always
 // builds. Set CMS_API_URL and CMS_API_TOKEN in .env.local to enable.
 // Collection schemas + seed entries: docs/cms-collections.md, docs/cms-seed/.
 // -----------------------------------------------------------------------------
@@ -243,8 +243,8 @@ export async function getServiceContentBySlug(slug: string): Promise<ServiceCont
 
 /* ------------------------------- videos -------------------------------- */
 
-// Accepts a full YouTube link in any common form — watch?v=, youtu.be/,
-// /embed/, /shorts/, /live/ — or a bare 11-character video ID.
+// Accepts a full YouTube link in any common form, watch?v=, youtu.be/,
+// /embed/, /shorts/, /live/, or a bare 11-character video ID.
 export function extractYouTubeId(value: string): string {
   const input = (value || "").trim();
   if (!input) return "";
@@ -262,7 +262,7 @@ export function extractYouTubeId(value: string): string {
 }
 
 // `video` collection: { videoLink, title?, kind? ("gallery" | "testimonial"),
-// order? }. Only gallery videos are wired for now. CMS-only — no local fallback.
+// order? }. Only gallery videos are wired for now. CMS-only, no local fallback.
 export async function getGalleryVideos(): Promise<string[]> {
   if (!cmsEnabled) return [];
   try {

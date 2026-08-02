@@ -2,8 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
+import JsonLd from "@/components/JsonLd";
 import { TreatmentJourneyWidget } from "@/components/InteractiveCare/InteractiveCare";
 import { services, contact } from "@/lib/site";
+import { breadcrumbSchema, medicalProcedureSchema } from "@/lib/seo";
 import { Check, Phone, ArrowRight } from "@/components/Icons";
 import styles from "./ServiceLayout.module.css";
 
@@ -100,6 +102,15 @@ function BlockView({ block }: { block: Block }) {
 export default function ServiceLayout({ content }: { content: ServiceContent }) {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: content.title, path: `/treatment/${content.slug}/` },
+          ]),
+          medicalProcedureSchema(content),
+        ]}
+      />
       <PageHero title={content.title} subtitle={content.subtitle} breadcrumb={content.breadcrumb} />
 
       <section className="section">
@@ -151,9 +162,9 @@ export default function ServiceLayout({ content }: { content: ServiceContent }) 
               <a href={`tel:${contact.phonePrimary}`} className={styles.callNum}>
                 {contact.phones[0]}
               </a>
-              <Link href="/contact-us" className="btn btn--light" style={{ width: "100%" }}>
+              <a href={contact.appointmentUrl} className="btn btn--light" style={{ width: "100%" }} target="_blank" rel="noopener noreferrer">
                 Book an Appointment
-              </Link>
+              </a>
             </div>
           </aside>
         </div>

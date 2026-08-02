@@ -51,12 +51,30 @@
   display: flex;
   flex-wrap: wrap;
   gap: 26px;
+  align-items: center;
 }
 .contactItem {
   display: flex;
   align-items: center;
   gap: 12px;
   color: #fff;
+}
+.bookItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--rose-deep);
+  font-weight: 800;
+  box-shadow: 0 16px 34px rgba(20, 22, 48, 0.18);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.bookItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(20, 22, 48, 0.22);
 }
 .contactIcon {
   display: grid;
@@ -67,8 +85,7 @@
   background: rgba(255, 255, 255, 0.14);
   flex-shrink: 0;
 }
-.contactItem span span,
-.contactItem > span {
+.contactText {
   display: flex;
   flex-direction: column;
   font-weight: 600;
@@ -181,6 +198,9 @@
     flex: 1;
     min-width: 150px;
   }
+  .bookItem {
+    flex: 1 1 100%;
+  }
 }
 @media (max-width: 480px) {
   .two {
@@ -196,5 +216,8 @@
   .contactItem {
     width: 100%;
     min-width: unset;
+  }
+  .bookItem {
+    width: 100%;
   }
 }

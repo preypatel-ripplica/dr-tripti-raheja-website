@@ -21,6 +21,14 @@
 .topContact {
   display: flex;
   gap: 26px;
+  align-items: center;
+  min-width: 0;
+}
+.topPhoneGroup {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
 }
 .topItem {
   display: inline-flex;
@@ -256,10 +264,13 @@
   .topContact {
     gap: 16px;
   }
+  .topPhoneGroup {
+    gap: 14px;
+  }
   .topItem span {
     display: none;
   }
-  .topItem:first-child span {
+  .topPhoneGroup .topItem:first-child span {
     display: inline;
   }
 }

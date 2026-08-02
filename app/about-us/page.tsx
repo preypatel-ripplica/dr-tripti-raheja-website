@@ -4,17 +4,20 @@ import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
 import { Check, Quote, Star } from "@/components/Icons";
 import { stats } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./about.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About Dr. Tripti Raheja",
   description:
-    "Dr. Tripti Raheja is a Senior Consultant Gynecologist/Obstetrician at C K Birla Hospital, Punjabi Bagh with 29+ years of experience.",
-};
+    "Dr. Tripti Raheja is Director of Obstetrics and Gynaecology in CK Birla Hospital Punjabi Bagh, Delhi with 29+ years of experience.",
+  path: "/about-us/",
+  image: "/images/Dr-Tripti-Raheja.png",
+});
 
 const qualifications = [
   { degree: "MBBS", year: "1997", place: "Sardar Patel Medical College, Bikaner" },
-  { degree: "MD / MS — Obstetrics & Gynaecology", year: "2000", place: "Lady Hardinge Medical College, New Delhi" },
+  { degree: "MD / MS in Obstetrics & Gynaecology", year: "2000", place: "Lady Hardinge Medical College, New Delhi" },
   { degree: "MRCOG (LONDON)", year: "2008", place: "Royal College of Obstetricians and Gynaecologists, London" },
   { degree: "FRCOG (LONDON)", year: "2021", place: "Royal College of Obstetricians and Gynaecologists, London" },
 ];
@@ -44,7 +47,7 @@ const highlights = [
   {
     title: "Professional Experience",
     items: [
-      "Director, CK Birla Hospital Punjabi Bagh, Delhi",
+      "Director of Obstetrics and Gynaecology, CK Birla Hospital Punjabi Bagh, Delhi",
       "Formerly- Director Obstetrics and Gynaecology Fortis Hospital Shalimar Bagh",
       "Max Hospital Pitampura and Shalimar Bagh",
     ],
@@ -62,7 +65,7 @@ const highlights = [
     items: [
       "Life Member, Association of Obstetricians & Gynaecologists of Delhi (AOGD)",
       "Life member of Federation of obs and Gynaecological societies of India",
-      "MRCOG — Royal College of Obstetricians & Gynaecologists, London",
+      "MRCOG, Royal College of Obstetricians & Gynaecologists, London",
       "Fellow of Royal college of obstetrics and Gynaecology London",
       "Certificate course in Laparoscopic Surgery from Indian Institute of Laparoscopic Surgery at VG Hospital Coimbatore",
       "Certified Da Vinci Robotic Console Surgeon",
@@ -77,7 +80,7 @@ export default function AboutPage() {
       <PageHero
         title="About Dr. Tripti Raheja"
         breadcrumb="About Us"
-        subtitle="Your trusted partner in gynecological care — compassionate expertise built over 29+ years."
+        subtitle="Your trusted partner in gynecological care, with compassionate expertise built over 29+ years."
       />
 
       {/* Intro */}
@@ -104,8 +107,8 @@ export default function AboutPage() {
             <span className="eyebrow">About the Doctor</span>
             <h2>Your Trusted Partner in Gynecological Care</h2>
             <p>
-              Dr. Tripti Raheja is a Director Obestrics and Gynecologist at
-              C K Birla Hospital, Punjabi Bagh. Dr. Tripti has been invited as faculty to various conferencess, be it at the
+              Dr. Tripti Raheja is Director of Obstetrics and Gynaecology in
+              CK Birla Hospital Punjabi Bagh, Delhi. Dr. Tripti has been invited as faculty to various conferencess, be it at the
               national or international level. She treats her patients warm-heartedly
               and listens to their concerns attentively. Only after a thorough
               discussion does she devise the treatment plan.
@@ -113,7 +116,7 @@ export default function AboutPage() {
             <p>
               She also organizes health camps targeted at the weaker sections of
               society. This initiative has helped many women and children with no
-              access to healthcare services — a reflection of ethics and social
+              access to healthcare services, a reflection of ethics and social
               concern that blend humanity with warm behaviour.
             </p>
             <div className={styles.miniStats}>

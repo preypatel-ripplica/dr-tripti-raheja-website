@@ -5,12 +5,14 @@ import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
 import { getBlogPosts } from "@/lib/cms";
 import { ArrowRight } from "@/components/Icons";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./blogs.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blogs",
   description: "Women's health articles and advice from Dr. Tripti Raheja.",
-};
+  path: "/blogs/",
+});
 
 export default async function BlogsPage() {
   const blogPosts = await getBlogPosts();

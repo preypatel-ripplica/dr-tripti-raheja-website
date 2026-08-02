@@ -3,11 +3,14 @@ import PageHero from "@/components/PageHero/PageHero";
 import PhotoGallery from "@/components/PhotoGallery/PhotoGallery";
 import Appointment from "@/components/Appointment/Appointment";
 import { publications } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Resources & Publications",
   description: "Awards, recognitions and published work of Dr. Tripti Raheja.",
-};
+  path: "/resources-publications/",
+  image: "/images/No-photo-description-available_-1-1.png",
+});
 
 export default function ResourcesPage() {
   return (

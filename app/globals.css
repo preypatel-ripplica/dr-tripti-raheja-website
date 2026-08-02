@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Dr. Tripti Raheja — v2 editorial design system.
+   Dr. Tripti Raheja, v2 editorial design system.
    Warm, feminine, women's-health brand. See DESIGN_TASTE.md.
    Fraunces (display serif) + DM Sans (body). Rose + navy on cream.
    ========================================================================== */
@@ -20,7 +20,7 @@
   /* Ink & neutrals (warm) */
   --ink: #2c2233; /* headings + strong text */
   --text: #5a5060; /* body */
-  --muted: #8b8091; /* secondary */
+  --muted: #6f6475; /* secondary */
   --line: #ebdfd7; /* hairlines */
 
   /* Legacy aliases (kept so copied components keep working) */

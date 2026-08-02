@@ -80,10 +80,6 @@ export default function Footer() {
                 <a href={`tel:${p.replace(/[^\d+]/g, "")}`}>{p}</a>
               </li>
             ))}
-            <li>
-              <Phone width={17} height={17} className={styles.cIcon} />
-              <a href={`tel:${contact.landline}`}>{contact.landline}</a>
-            </li>
           </ul>
         </div>
       </div>

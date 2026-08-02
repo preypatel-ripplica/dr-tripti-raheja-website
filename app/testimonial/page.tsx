@@ -4,12 +4,14 @@ import VideoGallery from "@/components/VideoGallery/VideoGallery";
 import Appointment from "@/components/Appointment/Appointment";
 import { reviews, reviewsSummary, testimonialVideos } from "@/lib/content";
 import { Star, Quote } from "@/components/Icons";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./testimonial.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Testimonial",
   description: "Read what patients say about their care with Dr. Tripti Raheja.",
-};
+  path: "/testimonial/",
+});
 
 export default function TestimonialPage() {
   return (

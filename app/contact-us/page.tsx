@@ -3,13 +3,15 @@ import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
 import { contact, socials } from "@/lib/site";
 import { socialIcon, Phone, Mail, MapPin, Clock } from "@/components/Icons";
+import { pageMetadata } from "@/lib/seo";
 import styles from "./contact.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
   description:
     "Contact Dr. Tripti Raheja to book your appointment or ask a question. Raheja Clinic, Vijay Nagar, New Delhi.",
-};
+  path: "/contact-us/",
+});
 
 export default function ContactPage() {
   return (
@@ -33,7 +35,6 @@ export default function ContactPage() {
                   {p}
                 </a>
               ))}
-              <a href={`tel:${contact.landline}`}>{contact.landline}</a>
             </div>
 
             <div className={styles.card}>

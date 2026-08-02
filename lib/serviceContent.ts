@@ -66,7 +66,7 @@ export const serviceContent: Record<string, ServiceContent> = {
         intro: "Laparoscopy is done for the following reasons:",
         items: [
           "To identify and treat problems such as endometriosis, ectopic pregnancy and pelvic inflammatory disease.",
-          "To locate problems that make it hard for women to become pregnant — cysts, adhesions, fibroids and infection.",
+          "To locate problems that make it hard for women to become pregnant, cysts, adhesions, fibroids and infection.",
           "To find out if cancer from another area of the body has spread to the abdomen.",
           "When initial fertility tests do not show the cause for infertility.",
         ],
@@ -140,10 +140,10 @@ export const serviceContent: Record<string, ServiceContent> = {
         intro:
           "Treatment may not be necessary if you have fibroids with minor or no symptoms. When treatment becomes imperative, it may be in the form of medication or surgery:",
         items: [
-          "GnRHA injection — reduces estrogen emission to shrink fibroids without affecting fertility once stopped.",
-          "Anti-inflammatory drugs — reduce prostaglandin production associated with heavy periods and act as painkillers.",
-          "Hysterectomy — removal of the uterus, considered when fibroids are very large or bleeding is excessive.",
-          "Myomectomy — fibroids are surgically removed from the uterus wall, ideal for women who wish to conceive.",
+          "GnRHA injection, reduces estrogen emission to shrink fibroids without affecting fertility once stopped.",
+          "Anti-inflammatory drugs, reduce prostaglandin production associated with heavy periods and act as painkillers.",
+          "Hysterectomy, removal of the uterus, considered when fibroids are very large or bleeding is excessive.",
+          "Myomectomy, fibroids are surgically removed from the uterus wall, ideal for women who wish to conceive.",
         ],
       },
       {
@@ -187,7 +187,7 @@ export const serviceContent: Record<string, ServiceContent> = {
         type: "list",
         intro: "As well as investigating problems, hysteroscopy can also be used to:",
         items: [
-          "Remove polyps — small lumps of tissue growing on the lining of the uterus.",
+          "Remove polyps, small lumps of tissue growing on the lining of the uterus.",
           "Remove scar tissue in the uterus.",
           "Remove adhesions (areas where the walls of the uterus stick together).",
           "Remove fibroids (non-cancerous growths in the uterus).",
@@ -248,7 +248,7 @@ export const serviceContent: Record<string, ServiceContent> = {
         image: "/images/24-rl5uj5eb693fazh49ylcd9419vlbci30bu1o92facw.jpg",
         imageSide: "right",
         paragraphs: [
-          "Robotic-assisted surgery offers several advantages over conventional methods — enhanced precision in delicate areas, quicker recovery, reduced pain, minimal blood loss, smaller scars, a lower risk of complications, and improved long-term results with fewer complications.",
+          "Robotic-assisted surgery offers several advantages over conventional methods, enhanced precision in delicate areas, quicker recovery, reduced pain, minimal blood loss, smaller scars, a lower risk of complications, and improved long-term results with fewer complications.",
         ],
       },
       {
@@ -256,11 +256,11 @@ export const serviceContent: Record<string, ServiceContent> = {
         heading: "Common Gynecological Conditions Treated",
         intro: "Robotic surgery is widely used to treat various gynecological conditions, including:",
         items: [
-          "Fibroids — precise removal while preserving the uterus.",
-          "Endometriosis — effective removal of abnormal tissue with minimal damage to surrounding organs.",
-          "Hysterectomy — safer removal of the uterus with faster recovery.",
-          "Ovarian cysts — gentle removal while preserving healthy ovarian tissue.",
-          "Pelvic organ prolapse — advanced repair procedures with durable results.",
+          "Fibroids, precise removal while preserving the uterus.",
+          "Endometriosis, effective removal of abnormal tissue with minimal damage to surrounding organs.",
+          "Hysterectomy, safer removal of the uterus with faster recovery.",
+          "Ovarian cysts, gentle removal while preserving healthy ovarian tissue.",
+          "Pelvic organ prolapse, advanced repair procedures with durable results.",
         ],
       },
       {
