@@ -122,7 +122,7 @@ export default function AboutPage() {
             <div className={styles.miniStats}>
               {stats.map((s) => (
                 <div key={s.label}>
-                  <strong>{s.value}</strong>
+                  <bdi dir="ltr" data-i18n-skip>{s.value}</bdi>
                   <span>{s.label}</span>
                 </div>
               ))}

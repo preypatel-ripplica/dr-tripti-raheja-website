@@ -12,10 +12,11 @@ import { absoluteUrl, defaultOgImage, physicianSchema, websiteSchema } from "@/l
 // Editorial display serif (see DESIGN_TASTE.md). Optical sizing + italics for warmth.
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-fraunces",
-  display: "swap",
+  display: "optional",
+  preload: false,
 });
 
 // Clean geometric sans for UI/body.
@@ -24,6 +25,7 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "600", "700"],
   variable: "--font-dmsans",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -78,7 +80,12 @@ export default async function RootLayout({
   ];
 
   return (
-    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`} suppressHydrationWarning>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){var locale=location.pathname.split("/")[1];if(!["hi","ar","ru"].includes(locale))return;var root=document.documentElement;root.lang=locale;root.dir=locale==="ar"?"rtl":"ltr";root.setAttribute("data-i18n-pending","");})();`,
+        }}
+      />
       <body>
         <GoogleAnalytics />
         <JsonLd data={[websiteSchema(), physicianSchema()]} />

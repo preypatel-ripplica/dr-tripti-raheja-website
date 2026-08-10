@@ -75,7 +75,7 @@
 }
 
 .nav {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 .nav > ul {
   display: flex;
@@ -118,7 +118,7 @@
 .dropdown {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  inset-inline-start: 0;
   min-width: 250px;
   background: #fff;
   border-radius: 14px;
@@ -140,8 +140,7 @@
   content: "";
   position: absolute;
   top: -8px;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   height: 10px;
 }
 .dropdown li a {
@@ -177,7 +176,7 @@
 .drawer {
   position: fixed;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   height: 100dvh;
   width: min(360px, 86vw);
   background: #fff;
@@ -223,7 +222,7 @@
   font-weight: 500;
   font-size: 1rem;
   color: var(--ink);
-  text-align: left;
+  text-align: start;
 }
 .mobileSub {
   padding: 0 0 12px 12px;
@@ -255,10 +254,21 @@
   .cta {
     display: none;
   }
+  .mainInner :global(.language-switcher--nav) {
+    display: none;
+  }
   .burger {
     display: inline-flex;
-    margin-left: auto;
+    margin-inline-start: auto;
   }
+}
+
+:global(html[dir="rtl"]) .drawer {
+  transform: translateX(-100%);
+}
+
+:global(html[dir="rtl"]) .drawerOpen {
+  transform: translateX(0);
 }
 @media (max-width: 560px) {
   .topContact {

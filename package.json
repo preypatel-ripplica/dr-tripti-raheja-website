@@ -5,7 +5,10 @@
   "description": "Editorial redesign of drtriptiraheja.com — warm, feminine, women's-health brand (Next.js App Router). See DESIGN_TASTE.md.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/build-multilingual.mjs",
+    "build:base": "next build",
+    "translate": "node scripts/translate.mjs",
+    "translate:dry-run": "node scripts/translate.mjs --dry-run",
     "start": "python3 -m http.server 3000 -d out",
     "lint": "next lint"
   },

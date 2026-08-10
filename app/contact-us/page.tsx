@@ -42,7 +42,7 @@ export default function ContactPage() {
                 <Mail width={22} height={22} />
               </span>
               <h3>Send Mail</h3>
-              <a href="/contact-us">Use the enquiry form below</a>
+              <a href="#appointment">Use the enquiry form below</a>
               <p className={styles.muted}>We usually respond within one working day.</p>
             </div>
 

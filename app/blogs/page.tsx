@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
 import { getBlogPosts } from "@/lib/cms";
@@ -28,7 +28,7 @@ export default async function BlogsPage() {
           <div className={styles.grid}>
             {blogPosts.map((post) => (
               <article key={post.slug} className={styles.card}>
-                <Link href={`/blogs/${post.slug}/`} className={styles.imgLink}>
+                <LocalizedLink href={`/blogs/${post.slug}/`} className={styles.imgLink}>
                   <div className={styles.img}>
                     <Image
                       src={post.image}
@@ -38,16 +38,16 @@ export default async function BlogsPage() {
                       className={styles.cover}
                     />
                   </div>
-                </Link>
+                </LocalizedLink>
                 <div className={styles.body}>
                   <span className={styles.tag}>{post.category}</span>
                   <h3>
-                    <Link href={`/blogs/${post.slug}/`}>{post.title}</Link>
+                    <LocalizedLink href={`/blogs/${post.slug}/`}>{post.title}</LocalizedLink>
                   </h3>
                   <p>{post.excerpt}</p>
-                  <Link href={`/blogs/${post.slug}/`} className={styles.readMore}>
+                  <LocalizedLink href={`/blogs/${post.slug}/`} className={styles.readMore}>
                     Read More <ArrowRight width={16} height={16} />
-                  </Link>
+                  </LocalizedLink>
                 </div>
               </article>
             ))}

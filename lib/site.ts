@@ -66,11 +66,11 @@ export const nav: NavItem[] = [
       { label: "Robotic Gynaecologic Surgery", href: "/robotic-gynaecologic-surgery" },
     ],
   },
-  { label: "Patient Information", href: "/patient-information" },
   {
     label: "Media",
     href: "#",
     children: [
+      { label: "Patient Information", href: "/patient-information" },
       { label: "Photo Gallery", href: "/photo-gallery" },
       { label: "Video Gallery", href: "/video-gallery" },
       { label: "Testimonial", href: "/testimonial" },

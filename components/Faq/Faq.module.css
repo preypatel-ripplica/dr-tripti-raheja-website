@@ -29,6 +29,11 @@
   font-weight: 600;
   font-size: 1.02rem;
   color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.q::-webkit-details-marker {
+  display: none;
 }
 .icon {
   color: var(--teal);

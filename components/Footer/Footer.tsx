@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import Image from "next/image";
 import { contact, services, socials, site } from "@/lib/site";
 import { socialIcon, Phone, MapPin, Clock } from "@/components/Icons";
@@ -39,7 +39,7 @@ export default function Footer() {
           <ul className={styles.links}>
             {services.map((s) => (
               <li key={s.slug}>
-                <Link href={`/${s.slug}`}>{s.title}</Link>
+                <LocalizedLink href={`/${s.slug}`}>{s.title}</LocalizedLink>
               </li>
             ))}
           </ul>
@@ -90,7 +90,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {site.name}. All Rights Reserved.
           </p>
           <p>
-            <Link href="/contact-us">Privacy Policy</Link>
+            <LocalizedLink href="/contact-us">Privacy Policy</LocalizedLink>
           </p>
         </div>
       </div>

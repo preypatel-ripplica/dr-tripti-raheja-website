@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import { notFound } from "next/navigation";
 import Appointment from "@/components/Appointment/Appointment";
 import Faq from "@/components/Faq/Faq";
@@ -65,9 +65,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         <div className={`container ${styles.heroGrid}`}>
           <div className={styles.heroCopy}>
             <nav className={styles.crumbs} aria-label="Breadcrumb">
-              <Link href="/">Home</Link>
+              <LocalizedLink href="/">Home</LocalizedLink>
               <span>/</span>
-              <Link href="/blogs/">Blogs</Link>
+              <LocalizedLink href="/blogs/">Blogs</LocalizedLink>
               <span>/</span>
               <span aria-current="page">{post.category}</span>
             </nav>
@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <div className={styles.moreGrid}>
               {morePosts.map((p) => (
                 <article key={p.slug} className={styles.moreCard}>
-                  <Link href={`/blogs/${p.slug}/`} className={styles.moreImg}>
+                  <LocalizedLink href={`/blogs/${p.slug}/`} className={styles.moreImg}>
                     <Image
                       src={p.image}
                       alt={p.title}
@@ -158,16 +158,16 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                       sizes="(max-width: 700px) 100vw, 45vw"
                       className={styles.cover}
                     />
-                  </Link>
+                  </LocalizedLink>
                   <div className={styles.moreBody}>
                     <span className={styles.tag}>{p.category}</span>
                     <h3>
-                      <Link href={`/blogs/${p.slug}/`}>{p.title}</Link>
+                      <LocalizedLink href={`/blogs/${p.slug}/`}>{p.title}</LocalizedLink>
                     </h3>
                     <p>{p.excerpt}</p>
-                    <Link href={`/blogs/${p.slug}/`} className={styles.readMore}>
+                    <LocalizedLink href={`/blogs/${p.slug}/`} className={styles.readMore}>
                       Read More <ArrowRight width={16} height={16} />
-                    </Link>
+                    </LocalizedLink>
                   </div>
                 </article>
               ))}

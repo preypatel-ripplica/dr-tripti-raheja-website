@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import styles from "./PageHero.module.css";
 
 export default function PageHero({
@@ -14,7 +14,7 @@ export default function PageHero({
     <section className={styles.hero}>
       <div className="container">
         <nav className={styles.crumbs} aria-label="Breadcrumb">
-          <Link href="/">Home</Link>
+          <LocalizedLink href="/">Home</LocalizedLink>
           <span>/</span>
           <span aria-current="page">{breadcrumb ?? title}</span>
         </nav>

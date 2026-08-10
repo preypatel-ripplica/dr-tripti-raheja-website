@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import { ArrowRight } from "@/components/Icons";
 
 export default function NotFound() {
@@ -11,9 +11,9 @@ export default function NotFound() {
           The page you are looking for may have been moved or no longer exists.
           Let&apos;s get you back to safe hands.
         </p>
-        <Link href="/" className="btn btn--primary">
+        <LocalizedLink href="/" className="btn btn--primary">
           Back to Home <ArrowRight width={18} height={18} />
-        </Link>
+        </LocalizedLink>
       </div>
     </section>
   );

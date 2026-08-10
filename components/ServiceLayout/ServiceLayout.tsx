@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
@@ -141,13 +141,13 @@ export default function ServiceLayout({ content }: { content: ServiceContent }) 
               <ul className={styles.sideNav}>
                 {services.map((s) => (
                   <li key={s.slug}>
-                    <Link
+                    <LocalizedLink
                       href={`/${s.slug}`}
                       className={s.slug === content.slug ? styles.sideActive : ""}
                     >
                       <span>{s.title}</span>
                       <ArrowRight width={16} height={16} />
-                    </Link>
+                    </LocalizedLink>
                   </li>
                 ))}
               </ul>

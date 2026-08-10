@@ -12,9 +12,11 @@
   grid-template-columns: 1.02fr 0.98fr;
   gap: 60px;
   align-items: center;
-  padding-block: clamp(52px, 8vw, 110px);
+  padding-block: 48px 92px;
 }
 .heroTitle {
+  /* Keep the LCP text independent of the display webfont on cold mobile loads. */
+  font-family: Georgia, "Times New Roman", serif;
   margin-bottom: 24px;
 }
 .heroTitle .ast {
@@ -278,6 +280,7 @@
 }
 .statNum {
   display: block;
+  unicode-bidi: isolate;
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(2.4rem, 4.5vw, 3.6rem);

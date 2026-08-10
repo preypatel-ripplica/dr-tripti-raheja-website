@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LocalizedLink from "@/components/I18n/LocalizedLink";
 import Image from "next/image";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
@@ -44,14 +44,14 @@ export default function HomePage() {
         ]}
       />
       {/* ============================ HERO ============================ */}
-      <section className={styles.hero}>
-        <div className={`container ${styles.heroInner}`}>
-          <div className={styles.heroText}>
+      <section className={`home-hero ${styles.hero}`}>
+        <div className={`container home-hero-inner ${styles.heroInner}`}>
+          <div className={`home-hero-text ${styles.heroText}`}>
             <span className="eyebrow">Gynaecology &amp; Obstetrics · North Delhi</span>
-            <h1 className={styles.heroTitle}>
-              Where women&apos;s health is met with <span className="accent-italic">compassionate</span> care<span className="ast">✳</span>
+            <h1 className={`home-hero-title ${styles.heroTitle}`}>
+              Where women&apos;s health is met with <span className="accent-italic">compassionate care</span><span className="ast">✳</span>
             </h1>
-            <p className={styles.heroLead}>
+            <p className={`home-hero-lead ${styles.heroLead}`}>
               Dr. Tripti Raheja, Director of Obstetrics and Gynaecology with
               29+ years of experience in safe deliveries, high-risk pregnancy and advanced
               laparoscopic surgery.
@@ -78,9 +78,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className={styles.heroMedia}>
-            <div className={styles.heroFrame}>
-              <picture className={styles.heroPicture}>
+          <div className={`home-hero-media ${styles.heroMedia}`}>
+            <div className={`home-hero-frame ${styles.heroFrame}`}>
+              <picture className={`home-hero-picture ${styles.heroPicture}`}>
                 <source media="(max-width: 780px)" srcSet="/images/optimized/dr-tripti-hero-640.jpg" />
                 <source media="(min-width: 781px)" srcSet="/images/optimized/dr-tripti-hero-960.jpg" />
                 <img
@@ -91,7 +91,7 @@ export default function HomePage() {
                   loading="eager"
                   fetchPriority="high"
                   decoding="sync"
-                  className={styles.cover}
+                  className={`home-hero-cover ${styles.cover}`}
                 />
               </picture>
             </div>
@@ -176,9 +176,9 @@ export default function HomePage() {
               <strong>Dr. Tripti Raheja</strong>
               <span>Director of Obstetrics and Gynaecology</span>
             </div>
-            <Link href="/about-us" className="btn btn--navy">
+            <LocalizedLink href="/about-us" className="btn btn--navy">
               More About Dr. Tripti <ArrowRight width={18} height={18} />
-            </Link>
+            </LocalizedLink>
           </div>
         </div>
       </section>
@@ -189,7 +189,7 @@ export default function HomePage() {
           {stats.map((s, i) => (
             <div key={s.label} className={styles.stat}>
               {i > 0 && <span className={styles.statSep}>✳</span>}
-              <span className={styles.statNum}>{s.value}</span>
+              <bdi dir="ltr" data-i18n-skip className={styles.statNum}>{s.value}</bdi>
               <span className={styles.statLabel}>{s.label}</span>
             </div>
           ))}
@@ -213,7 +213,7 @@ export default function HomePage() {
           </div>
           <div className={styles.bento}>
             {services.map((s, i) => (
-              <Link
+              <LocalizedLink
                 key={s.slug}
                 href={`/${s.slug}`}
                 className={`${styles.bentoCard} ${i === 0 ? styles.bentoLarge : ""}`}
@@ -234,7 +234,7 @@ export default function HomePage() {
                     Learn more <ArrowRight width={16} height={16} />
                   </span>
                 </div>
-              </Link>
+              </LocalizedLink>
             ))}
           </div>
         </div>

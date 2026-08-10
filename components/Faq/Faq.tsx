@@ -13,12 +13,17 @@ export default function Faq({ items }: { items: FaqItem[] }) {
       {items.map((item, i) => {
         const isOpen = open === i;
         return (
-          <div key={item.q} className={`${styles.item} ${isOpen ? styles.itemOpen : ""}`}>
-            <button
-              type="button"
+          <details
+            key={item.q}
+            className={`${styles.item} ${isOpen ? styles.itemOpen : ""}`}
+            open={isOpen}
+          >
+            <summary
               className={styles.q}
-              aria-expanded={isOpen}
-              onClick={() => setOpen(isOpen ? null : i)}
+              onClick={(event) => {
+                event.preventDefault();
+                setOpen(isOpen ? null : i);
+              }}
             >
               <span>{item.q}</span>
               <Chevron
@@ -27,13 +32,13 @@ export default function Faq({ items }: { items: FaqItem[] }) {
                 className={styles.icon}
                 style={{ transform: isOpen ? "rotate(180deg)" : "none" }}
               />
-            </button>
+            </summary>
             <div className={styles.answer} style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
               <div className={styles.answerInner}>
                 <p>{item.a}</p>
               </div>
             </div>
-          </div>
+          </details>
         );
       })}
     </div>
