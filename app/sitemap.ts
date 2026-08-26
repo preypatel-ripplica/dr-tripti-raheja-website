@@ -3,6 +3,8 @@ import { getBlogPosts, getServiceContent } from "@/lib/cms";
 import { services } from "@/lib/site";
 import { absoluteUrl, canonicalPath } from "@/lib/seo";
 
+const localeCodes = ["hi", "ar", "ru"] as const;
+
 const staticPaths = [
   "/",
   "/about-us/",
@@ -15,6 +17,66 @@ const staticPaths = [
   "/contact-us/",
 ];
 
+function localizedPath(path: string, locale: (typeof localeCodes)[number]) {
+  const normalized = canonicalPath(path);
+  return normalized === "/" ? `/${locale}/` : `/${locale}${normalized}`;
+}
+
+function createSitemapEntry({
+  path,
+  lastModified,
+  changeFrequency,
+  priority,
+}: {
+  path: string;
+  lastModified: Date;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}): MetadataRoute.Sitemap[number] {
+  const normalized = canonicalPath(path);
+  return {
+    url: absoluteUrl(normalized),
+    lastModified,
+    changeFrequency,
+    priority,
+    alternates: {
+      languages: {
+        "en-IN": absoluteUrl(normalized),
+        hi: absoluteUrl(localizedPath(normalized, "hi")),
+        ar: absoluteUrl(localizedPath(normalized, "ar")),
+        ru: absoluteUrl(localizedPath(normalized, "ru")),
+      },
+    },
+  };
+}
+
+function createLocalizedEntries({
+  path,
+  lastModified,
+  changeFrequency,
+  priority,
+}: {
+  path: string;
+  lastModified: Date;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+}): MetadataRoute.Sitemap {
+  return localeCodes.map((locale) => ({
+    url: absoluteUrl(localizedPath(path, locale)),
+    lastModified,
+    changeFrequency,
+    priority,
+    alternates: {
+      languages: {
+        "en-IN": absoluteUrl(canonicalPath(path)),
+        hi: absoluteUrl(localizedPath(path, "hi")),
+        ar: absoluteUrl(localizedPath(path, "ar")),
+        ru: absoluteUrl(localizedPath(path, "ru")),
+      },
+    },
+  }));
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const [blogPosts, cmsTreatments] = await Promise.all([
@@ -25,26 +87,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ? Object.keys(cmsTreatments)
     : services.map((service) => service.slug);
 
-  const urls: MetadataRoute.Sitemap = [
+  const englishPaths = [
     ...staticPaths.map((path) => ({
-      url: absoluteUrl(canonicalPath(path)),
-      lastModified: now,
+      path,
       changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
       priority: path === "/" ? 1 : 0.7,
     })),
     ...treatmentSlugs.map((slug) => ({
-      url: absoluteUrl(canonicalPath(`/treatment/${slug}/`)),
-      lastModified: now,
+      path: `/treatment/${slug}/`,
       changeFrequency: "monthly" as const,
       priority: 0.85,
     })),
     ...blogPosts.map((post) => ({
-      url: absoluteUrl(canonicalPath(`/blogs/${post.slug}/`)),
-      lastModified: now,
+      path: `/blogs/${post.slug}/`,
       changeFrequency: "monthly" as const,
       priority: 0.65,
     })),
   ];
+
+  const urls: MetadataRoute.Sitemap = englishPaths.flatMap((entry) => [
+    createSitemapEntry({
+      path: entry.path,
+      lastModified: now,
+      changeFrequency: entry.changeFrequency,
+      priority: entry.priority,
+    }),
+    ...createLocalizedEntries({
+      path: entry.path,
+      lastModified: now,
+      changeFrequency: entry.changeFrequency,
+      priority: Math.max(entry.priority - 0.05, 0.5),
+    }),
+  ]);
 
   return urls.filter((entry, index, all) => all.findIndex((item) => item.url === entry.url) === index);
 }

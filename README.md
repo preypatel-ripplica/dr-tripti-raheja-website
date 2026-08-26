@@ -57,7 +57,7 @@ for a CMS query without touching the presentation layer:
 - **Blogs** → CMS collection `blogs` (fallback: `lib/content.ts` → `blogPosts`).
   Each post is structured content (intro, sections, FAQs) rendered by
   `app/blogs/[slug]/page.tsx`.
-- **Treatments** → CMS collection `treatments` (fallback: `lib/serviceContent.ts`).
+- **Treatments** → CMS collection `treatment-new` (fallback: `lib/serviceContent.ts`).
   Cards/nav labels still come from `lib/site.ts` → `services`.
 - **Video gallery** → CMS collection `videos` (fallback: `lib/content.ts` → `galleryVideos`).
 - **Testimonials / photo gallery** → `lib/content.ts`.

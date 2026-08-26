@@ -110,31 +110,95 @@ Example `sections` value:
 
 ## 2. `treatment`
 
-One entry per treatment page. Rendered by the five treatment routes
-(`/high-risk-pregnancy`, `/laparoscopic-surgery`, `/infertility-treatment`,
-`/hysteroscopy-treatment`, `/robotic-gynaecologic-surgery`). Entries are
-matched to routes by `slug`; a route with no CMS entry keeps its local content.
+One entry per treatment page. Rendered by the canonical treatment routes
+(`/treatment/high-risk-pregnancy`, `/treatment/laparoscopic-surgery`,
+`/treatment/infertility-treatment`, `/treatment/hysteroscopy-treatment`,
+`/treatment/robotic-gynaecologic-surgery`). Entries are matched to routes by
+`slug`.
 
-| Field key    | Type            | Required | Notes                                       |
-| ------------ | --------------- | -------- | ------------------------------------------- |
-| `slug`       | text (unique)   | yes      | Must equal the route, e.g. `laparoscopic-surgery` |
-| `title`      | text            | yes      | H1 on the page                              |
-| `breadcrumb` | text            | no       | Short name for the breadcrumb; defaults to `title` |
-| `subtitle`   | long text       | no       | Line under the H1 + meta description        |
-| `hero_image` | media           | yes      | Large image at the top of the article       |
-| `blocks`     | JSON / repeater | yes      | Ordered content blocks, four types below    |
-
-Block types (discriminated by `type`):
+Use this simplified schema for new treatment entries:
 
 ```json
-{ "type": "text",      "heading": "optional", "paragraphs": ["…"] }
-{ "type": "list",      "heading": "optional", "intro": "optional", "items": ["…"] }
-{ "type": "imageText", "heading": "optional", "paragraphs": ["…"], "image": "/images/x.png", "imageSide": "left | right" }
-{ "type": "gallery",   "images": [{ "src": "/images/x.png", "alt": "optional" }] }
+{
+  "slug": "",
+  "title": "",
+  "seoTitle": "",
+  "description": "",
+  "keywords": "",
+  "canonicalPath": "",
+  "category": "",
+  "readTime": "",
+  "excerpt": "",
+  "heroSubtitle": "",
+  "author": "",
+  "authorImage": "",
+  "publishedAt": "",
+  "publishedLabel": "",
+  "hero_image": {
+    "media_id": "",
+    "alt_text": "",
+    "name": ""
+  },
+  "content_image": {
+    "media_id": "",
+    "alt_text": "",
+    "name": ""
+  },
+  "cardAlt": "",
+  "bannerAlt": "",
+  "tags": [""],
+  "content": {
+    "intro": "",
+    "blocks": [
+      {
+        "type": "section",
+        "heading": "",
+        "paragraphs": [""],
+        "list": {
+          "type": "ul",
+          "items": [""]
+        }
+      },
+      {
+        "type": "image"
+      }
+    ]
+  },
+  "treatmentPlanner": {
+    "title": "",
+    "intro": "",
+    "steps": [
+      {
+        "label": "",
+        "question": "",
+        "helper": "",
+        "options": [
+          {
+            "label": "",
+            "note": ""
+          }
+        ]
+      }
+    ],
+    "bring": [""],
+    "outcomes": [""]
+  },
+  "faqs": [
+    {
+      "question": "",
+      "answer": [""],
+      "openByDefault": false
+    }
+  ]
+}
 ```
 
-`image` / `src` accept either a plain path string or a CMS media reference
-(`{ "media_id": "…" }`).
+`hero_image`, `content_image`, block image fields and gallery images accept CMS
+media references such as `{ "media_id": "…", "alt_text": "…", "name": "…" }`.
+Treatment FAQs use the simple CMS format above and are converted into visible
+accordions plus JSON-LD FAQ schema during build.
+Older treatment entries using top-level `subtitle`, `blocks`,
+or `{ "q": "", "a": "" }` FAQs still render.
 
 Seed entries: [`cms-seed/treatments.json`](cms-seed/treatments.json)
 

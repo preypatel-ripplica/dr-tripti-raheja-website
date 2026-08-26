@@ -4,7 +4,7 @@
   background:
     radial-gradient(700px 320px at 50% -20%, rgba(232, 151, 126, 0.22), transparent 65%),
     linear-gradient(180deg, var(--peach), var(--cream));
-  padding: clamp(56px, 7vw, 96px) 0;
+  padding: clamp(34px, 5vw, 64px) 0 clamp(36px, 5vw, 68px);
   overflow: hidden;
 }
 .hero::before {
@@ -91,6 +91,10 @@
 }
 
 /* --------------------------- article --------------------------- */
+.articleSection {
+  padding-top: clamp(28px, 4vw, 52px);
+  padding-bottom: clamp(34px, 5vw, 64px);
+}
 .layout {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
@@ -152,6 +156,84 @@
 }
 .block h2 {
   font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+}
+.contentImage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 2rem 0;
+  box-shadow: var(--shadow-sm);
+}
+.resourceBlock {
+  margin-top: 2.6rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.resourceBlock h2 {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  margin-bottom: 1.1rem;
+}
+.nextReadsSection {
+  padding: clamp(34px, 5vw, 64px) 0;
+  background: var(--cream);
+}
+.nextReadsInner {
+  max-width: 980px;
+}
+.linkGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.linkCard {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  color: var(--ink);
+  background: var(--cream);
+}
+.linkCard:hover {
+  color: var(--rose);
+}
+.linkCard svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--rose);
+}
+.linkCard strong,
+.linkCard small {
+  display: block;
+}
+.linkCard small {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+.resourceBlock ul {
+  display: grid;
+  gap: 10px;
+  padding-left: 0;
+  list-style: none;
+}
+.resourceBlock a {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.resourceBlock a:hover {
+  color: var(--rose);
+}
+.resourceBlock span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
 }
 .faqBlock {
   margin-top: 2.6rem;
@@ -241,5 +323,8 @@
   }
   .aside {
     position: static;
+  }
+  .linkGrid {
+    grid-template-columns: 1fr;
   }
 }

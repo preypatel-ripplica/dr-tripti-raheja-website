@@ -22,6 +22,19 @@ type ConcernGuideItem = {
 type Urgency = "routine" | "soon" | "urgent";
 type GuideStep = 0 | 1 | 2;
 
+export type TreatmentPlanner = {
+  title: string;
+  intro: string;
+  steps: {
+    label: string;
+    question: string;
+    helper: string;
+    options: { label: string; note: string }[];
+  }[];
+  bring?: string[];
+  outcomes?: string[];
+};
+
 const concernGuide: ConcernGuideItem[] = [
   {
     label: "Pregnancy feels high-risk",
@@ -218,21 +231,7 @@ const prepConcerns: PrepConcern[] = [
   },
 ];
 
-const treatmentPaths: Record<
-  string,
-  {
-    title: string;
-    intro: string;
-    steps: {
-      label: string;
-      question: string;
-      helper: string;
-      options: { label: string; note: string }[];
-    }[];
-    bring: string[];
-    outcomes: string[];
-  }
-> = {
+const treatmentPaths: Record<string, TreatmentPlanner> = {
   "high-risk-pregnancy": {
     title: "Plan your pregnancy visit",
     intro: "Pick what matters most so the visit can focus on the right things.",
@@ -853,8 +852,14 @@ export function ConsultationPrepKit() {
   );
 }
 
-export function TreatmentJourneyWidget({ slug }: { slug: string }) {
-  const path = treatmentPaths[slug] ?? defaultPath;
+export function TreatmentJourneyWidget({
+  slug,
+  planner,
+}: {
+  slug: string;
+  planner?: TreatmentPlanner;
+}) {
+  const path = planner ?? treatmentPaths[slug] ?? defaultPath;
   const [active, setActive] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const step = path.steps[active];

@@ -15,11 +15,20 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const content = await getServiceContentBySlug(params.slug);
   return pageMetadata({
-    title: content.title,
-    description: content.subtitle || `${content.title} with Dr. Tripti Raheja in Delhi.`,
-    path: `/treatment/${params.slug}/`,
+    title: stripSiteSuffix(content.seoTitle || content.title),
+    description:
+      content.metaDescription ||
+      content.description ||
+      content.subtitle ||
+      `${content.title} with Dr. Tripti Raheja in Delhi.`,
+    path: content.canonicalPath || `/treatment/${params.slug}/`,
     image: content.heroImage,
+    keywords: content.keywords,
   });
+}
+
+function stripSiteSuffix(title: string) {
+  return title.replace(/\s*\|\s*Dr\.?\s*Tripti\s*Raheja\s*$/i, "").trim();
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {

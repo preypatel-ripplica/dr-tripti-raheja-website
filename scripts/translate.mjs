@@ -21,19 +21,40 @@ const dryRun = args.has("--dry-run");
 const scopeArg = process.argv.find((arg) => arg.startsWith("--scope="));
 const scopes = scopeArg ? new Set(scopeArg.split("=")[1].split(",").map((item) => item.trim())) : null;
 const targetLocales = LOCALES.filter((locale) => locale.code !== DEFAULT_LOCALE);
-
-if (!fs.existsSync(OUT_DIR)) {
-  console.error("Missing out/. Run npm run build:base first, then npm run translate.");
-  process.exit(1);
-}
+const CMS_SKIP_KEYS = new Set([
+  "id",
+  "slug",
+  "href",
+  "url",
+  "src",
+  "media_id",
+  "mediaId",
+  "name",
+  "canonicalPath",
+  "canonical_path",
+  "publishedAt",
+  "published_at",
+  "modifiedAt",
+  "modified_at",
+  "date",
+  "published",
+  "modified",
+  "source",
+  "authorImage",
+  "author_image",
+]);
 
 loadEnv();
+
+if (!fs.existsSync(OUT_DIR)) {
+  console.warn("Missing out/. Static page strings will be skipped, but CMS strings will still be scanned.");
+}
 
 const memory = readMemory();
 for (const [key, entry] of Object.entries(memory)) {
   if (!isLikelyUiString(entry.en)) delete memory[key];
 }
-const discovered = collectSourceStrings();
+const discovered = await collectSourceStrings();
 const missing = discovered.filter((item) =>
   targetLocales.some((locale) => !memory[item.key]?.[locale.code]),
 );
@@ -92,13 +113,17 @@ for (let index = 0; index < missing.length; index += batchSize) {
 
 printSummary(discovered.length, []);
 
-function collectSourceStrings() {
+async function collectSourceStrings() {
   const strings = new Map();
   for (const filePath of getHtmlFiles()) {
     const pagePath = pagePathFromHtmlFile(filePath);
     if (scopes && !scopes.has(pageScope(pagePath))) continue;
     const html = fs.readFileSync(filePath, "utf8");
     for (const [key, en] of extractStringsFromHtml(html)) {
+      strings.set(key, { key, en, scope: pageScope(pagePath) });
+    }
+    for (const en of extractStringsFromHydrationPayload(html)) {
+      const key = hashText(en);
       strings.set(key, { key, en, scope: pageScope(pagePath) });
     }
   }
@@ -114,7 +139,140 @@ function collectSourceStrings() {
       strings.set(key, { key, en, scope });
     }
   }
+  for (const item of await collectCmsStrings()) {
+    if (scopes && !scopes.has(item.scope)) continue;
+    strings.set(item.key, item);
+  }
   return [...strings.values()].sort((a, b) => a.en.localeCompare(b.en));
+}
+
+async function collectCmsStrings() {
+  const cmsApiUrl = process.env.CMS_API_URL;
+  const cmsApiToken = process.env.CMS_API_TOKEN;
+  if (!cmsApiUrl || !cmsApiToken) return [];
+
+  const strings = new Map();
+  const collections = [
+    { slug: "new-blogs", scope: "blog" },
+    { slug: "treatment-new", scope: "treatments" },
+  ];
+
+  for (const collection of collections) {
+    let entries = [];
+    try {
+      entries = await fetchCmsCollection(collection.slug, cmsApiUrl, cmsApiToken);
+    } catch (error) {
+      console.warn(`CMS translation scan skipped ${collection.slug}: ${error?.message ?? error}`);
+      continue;
+    }
+    for (const item of entries) {
+      const entry = item.entry || item;
+      for (const en of extractStringsFromCmsEntry(entry)) {
+        const key = hashText(en);
+        strings.set(key, { key, en, scope: collection.scope });
+      }
+    }
+  }
+
+  return [...strings.values()];
+}
+
+async function fetchCmsCollection(collectionSlug, cmsApiUrl, cmsApiToken) {
+  const endpoint = "/api/content.entries.list";
+  const baseUrl = `${cmsApiUrl.replace(/\/$/, "")}${endpoint}`;
+  const url = `${baseUrl}?cms_cache_bust=${encodeURIComponent(process.env.CMS_CACHE_BUST || String(Date.now()))}`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${cmsApiToken}`,
+      "ngrok-skip-browser-warning": "true",
+    },
+    body: JSON.stringify({ collection_slug: collectionSlug, page_size: 100 }),
+    signal: AbortSignal.timeout(15000),
+  });
+  if (!response.ok) {
+    throw new Error(`CMS request failed (${response.status}): ${await response.text()}`);
+  }
+  const data = await response.json();
+  return Array.isArray(data) ? data : data.entries || data.data || data.items || [];
+}
+
+function extractStringsFromCmsEntry(entry) {
+  const values = new Set();
+  const walk = (value, key = "") => {
+    if (typeof value === "string") {
+      addCmsValue(values, value, key);
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) walk(item, key);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    for (const [childKey, childValue] of Object.entries(value)) {
+      walk(childValue, childKey);
+    }
+  };
+  walk(entry);
+  return values;
+}
+
+function addCmsValue(values, value, key) {
+  const normalized = normalizeText(value);
+  if (!isLikelyUiString(normalized)) return;
+  if (CMS_SKIP_KEYS.has(key)) return;
+  if (/^(https?:|mailto:|tel:|\/|#)/i.test(normalized)) return;
+  if (/^[a-f0-9-]{24,}$/i.test(normalized)) return;
+  if (/\.(?:jpg|jpeg|png|webp|gif|svg|pdf)$/i.test(normalized)) return;
+  values.add(normalized);
+}
+
+function extractStringsFromHydrationPayload(html) {
+  const values = new Set();
+  const wantedKeys = new Set([
+    "children",
+    "label",
+    "title",
+    "intro",
+    "question",
+    "helper",
+    "note",
+    "bring",
+    "outcomes",
+  ]);
+
+  for (const match of html.matchAll(/\\?"([A-Za-z][A-Za-z0-9_]*)\\?":\\?"((?:\\\\.|[^"\\])+)\\?"/g)) {
+    if (!wantedKeys.has(match[1])) continue;
+    addHydrationValue(values, decodeJsStringFragment(match[2]));
+  }
+
+  for (const match of html.matchAll(/\\?"children\\?",\s*\\?"((?:\\\\.|[^"\\])+)\\?"/g)) {
+    addHydrationValue(values, decodeJsStringFragment(match[1]));
+  }
+
+  return values;
+}
+
+function addHydrationValue(values, value) {
+  const normalized = normalizeText(value);
+  if (!isLikelyUiString(normalized)) return;
+  if (/^[$A-Z]\d+$/.test(normalized)) return;
+  if (/^(?:@context|@type|@id|mainEntity|acceptedAnswer|BreadcrumbList|FAQPage|WebSite|Physician)$/i.test(normalized)) return;
+  values.add(normalized);
+}
+
+function decodeJsStringFragment(value) {
+  try {
+    return JSON.parse(`"${value.replace(/"/g, '\\"')}"`);
+  } catch {
+    return value
+      .replace(/\\u([0-9a-f]{4})/gi, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
+      .replace(/\\"/g, '"')
+      .replace(/\\n/g, "\n")
+      .replace(/\\t/g, "\t")
+      .replace(/\\\\/g, "\\");
+  }
 }
 
 function getSourceFiles() {
@@ -194,7 +352,8 @@ async function translateBatchWithRetries(batch, model, apiKey) {
       return await translateBatch(batch, model, apiKey);
     } catch (error) {
       lastError = error;
-      if (!/ETIMEDOUT|ECONNRESET|fetch failed|429|503|504/i.test(String(error?.message ?? error))) {
+      const message = String(error?.message ?? error);
+      if (!/ETIMEDOUT|ECONNRESET|fetch failed|429|503|504|invalid JSON/i.test(message)) {
         throw error;
       }
       if (attempt < 3) {
@@ -202,6 +361,14 @@ async function translateBatchWithRetries(batch, model, apiKey) {
       }
     }
   }
+
+  if (/invalid JSON/i.test(String(lastError?.message ?? lastError)) && batch.length > 1) {
+    const midpoint = Math.ceil(batch.length / 2);
+    const firstHalf = await translateBatchWithRetries(batch.slice(0, midpoint), model, apiKey);
+    const secondHalf = await translateBatchWithRetries(batch.slice(midpoint), model, apiKey);
+    return [...firstHalf, ...secondHalf];
+  }
+
   throw lastError;
 }
 
@@ -222,7 +389,7 @@ async function translateBatch(batch, model, apiKey) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: "application/json" },
+        generationConfig: { responseMimeType: "application/json", temperature: 0 },
       }),
     },
   );
@@ -232,7 +399,12 @@ async function translateBatch(batch, model, apiKey) {
   const payload = await response.json();
   const text = payload.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) throw new Error("Gemini returned an empty response.");
-  return JSON.parse(text);
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    const preview = text.slice(0, 500).replace(/\s+/g, " ");
+    throw new Error(`Gemini returned invalid JSON: ${error?.message ?? error}. Response preview: ${preview}`);
+  }
 }
 
 function requireText(value, key, locale) {

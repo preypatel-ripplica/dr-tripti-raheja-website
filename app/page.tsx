@@ -49,7 +49,7 @@ export default function HomePage() {
           <div className={`home-hero-text ${styles.heroText}`}>
             <span className="eyebrow">Gynaecology &amp; Obstetrics · North Delhi</span>
             <h1 className={`home-hero-title ${styles.heroTitle}`}>
-              Where women&apos;s health is met with <span className="accent-italic">compassionate care</span><span className="ast">✳</span>
+              Where women&apos;s health is met with compassionate care<span className="ast">✳</span>
             </h1>
             <p className={`home-hero-lead ${styles.heroLead}`}>
               Dr. Tripti Raheja, Director of Obstetrics and Gynaecology with
@@ -146,9 +146,7 @@ export default function HomePage() {
           </div>
           <div className={styles.aboutText}>
             <span className="eyebrow">About the Doctor</span>
-            <h2>
-              A trusted name in women&apos;s <span className="accent-italic">healthcare</span>
-            </h2>
+            <h2>A trusted name in women&apos;s healthcare</h2>
             <p>
               Dr. Tripti Raheja is a renowned gynecologist, obstetrician, and laparoscopic
               surgeon with over <strong>29 years of experience</strong>. Currently working
@@ -202,9 +200,7 @@ export default function HomePage() {
           <div className={styles.servicesHead}>
             <div>
               <span className="eyebrow">Our Expertise</span>
-              <h2>
-                Complete care, at every <span className="accent-italic">stage</span>
-              </h2>
+              <h2>Complete care, at every stage</h2>
             </div>
             <p>
               With expertise and dedication, you can expect nothing but the finest care for
@@ -215,7 +211,7 @@ export default function HomePage() {
             {services.map((s, i) => (
               <LocalizedLink
                 key={s.slug}
-                href={`/${s.slug}`}
+                href={`/treatment/${s.slug}`}
                 className={`${styles.bentoCard} ${i === 0 ? styles.bentoLarge : ""}`}
               >
                 <div className={styles.bentoImg}>
@@ -276,9 +272,7 @@ export default function HomePage() {
           <div className={styles.reviewsHead}>
             <div>
               <span className="eyebrow">Kind Words</span>
-              <h2>
-                Loved by our <span className="accent-italic">patients</span>
-              </h2>
+              <h2>Loved by our patients</h2>
             </div>
             <div className={styles.reviewScore}>
               <CircleBadge text={`${reviewsSummary.rating} rating · ${reviewsSummary.count} reviews · `} center="★" size={104} className={styles.scoreBadge} />

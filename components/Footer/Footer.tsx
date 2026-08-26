@@ -39,7 +39,7 @@ export default function Footer() {
           <ul className={styles.links}>
             {services.map((s) => (
               <li key={s.slug}>
-                <LocalizedLink href={`/${s.slug}`}>{s.title}</LocalizedLink>
+                <LocalizedLink href={`/treatment/${s.slug}`}>{s.title}</LocalizedLink>
               </li>
             ))}
           </ul>

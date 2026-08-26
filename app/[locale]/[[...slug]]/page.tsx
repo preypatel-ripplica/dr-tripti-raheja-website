@@ -4,14 +4,9 @@ import AboutPage from "../../about-us/page";
 import BlogsPage from "../../blogs/page";
 import BlogPostPage from "../../blogs/[slug]/page";
 import ContactPage from "../../contact-us/page";
-import HighRiskPregnancyPage from "../../high-risk-pregnancy/page";
-import HysteroscopyTreatmentPage from "../../hysteroscopy-treatment/page";
-import InfertilityTreatmentPage from "../../infertility-treatment/page";
-import LaparoscopicSurgeryPage from "../../laparoscopic-surgery/page";
 import PatientInformationPage from "../../patient-information/page";
 import PhotoGalleryPage from "../../photo-gallery/page";
 import ResourcesPublicationsPage from "../../resources-publications/page";
-import RoboticGynaecologicSurgeryPage from "../../robotic-gynaecologic-surgery/page";
 import TestimonialPage from "../../testimonial/page";
 import TreatmentPage from "../../treatment/[slug]/page";
 import VideoGalleryPage from "../../video-gallery/page";
@@ -25,14 +20,9 @@ const staticRoutes = [
   ["about-us"],
   ["blogs"],
   ["contact-us"],
-  ["high-risk-pregnancy"],
-  ["hysteroscopy-treatment"],
-  ["infertility-treatment"],
-  ["laparoscopic-surgery"],
   ["patient-information"],
   ["photo-gallery"],
   ["resources-publications"],
-  ["robotic-gynaecologic-surgery"],
   ["testimonial"],
   ["video-gallery"],
 ];
@@ -81,14 +71,9 @@ async function getPage(route: string, slug: string[]) {
   if (route === "about-us") return <AboutPage />;
   if (route === "blogs") return BlogsPage();
   if (route === "contact-us") return <ContactPage />;
-  if (route === "high-risk-pregnancy") return HighRiskPregnancyPage();
-  if (route === "hysteroscopy-treatment") return HysteroscopyTreatmentPage();
-  if (route === "infertility-treatment") return InfertilityTreatmentPage();
-  if (route === "laparoscopic-surgery") return LaparoscopicSurgeryPage();
   if (route === "patient-information") return <PatientInformationPage />;
   if (route === "photo-gallery") return <PhotoGalleryPage />;
   if (route === "resources-publications") return <ResourcesPublicationsPage />;
-  if (route === "robotic-gynaecologic-surgery") return RoboticGynaecologicSurgeryPage();
   if (route === "testimonial") return <TestimonialPage />;
   if (route === "video-gallery") return VideoGalleryPage();
   if (slug[0] === "blogs" && slug[1]) return BlogPostPage({ params: { slug: slug[1] } });

@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// CMS connector. Fetches the `blogs`, `treatment` and `video` collections at
+// CMS connector. Fetches the `new-blogs`, `treatment-new` and `video` collections at
 // build time (the site is statically exported) and falls back to the local
 // data in lib/content.ts / lib/serviceContent.ts when the CMS is not
 // configured, unreachable, or a collection is still empty, so the site always
@@ -13,6 +13,7 @@ import {
   blogPosts as localBlogPosts,
   galleryVideos as localGalleryVideos,
   type BlogPost,
+  type BlogResource,
   type BlogSection,
   type Faq,
 } from "./content";
@@ -25,9 +26,14 @@ const CMS_API_TOKEN = process.env.CMS_API_TOKEN;
 type CmsRecord = Record<string, any>;
 
 const cmsEnabled = Boolean(CMS_API_URL && CMS_API_TOKEN);
+const cmsCacheBuster =
+  process.env.CMS_CACHE_BUST ||
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  String(Date.now());
 
 async function cmsPost(endpoint: string, body: CmsRecord): Promise<any | null> {
-  const res = await fetch(`${CMS_API_URL}${endpoint}`, {
+  const separator = endpoint.includes("?") ? "&" : "?";
+  const res = await fetch(`${CMS_API_URL}${endpoint}${separator}cms_cache_bust=${encodeURIComponent(cmsCacheBuster)}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -136,24 +142,36 @@ function formatDate(value: any): string {
 export async function getBlogPosts(): Promise<BlogPost[]> {
   if (!cmsEnabled) return localBlogPosts;
   try {
-    const entries = await fetchCollection("blogs");
+    const entries = await fetchCollection("new-blogs");
     const posts: BlogPost[] = entries
       .map((item) => {
         const entry = item.entry || item;
+        const publishedAt = entry.publishedAt || entry.published || item.published_at || "";
+        const publishedLabel = entry.publishedLabel || entry.date || formatDate(publishedAt);
+        const content = entry.content || {};
         return {
           slug: entry.slug || "",
           title: entry.title || "",
           category: entry.category || "Women's Health",
           excerpt: entry.excerpt || "",
           image: resolveImage(entry.hero_image) || "/images/1-5.png",
-          date: entry.date || formatDate(entry.published || item.published_at),
+          contentImage: resolveImage(entry.content_image),
+          bannerAlt: entry.bannerAlt || entry.banner_alt || entry.content_image?.alt_text || "",
+          cardAlt: entry.cardAlt || entry.card_alt || entry.hero_image?.alt_text || "",
+          date: publishedLabel,
+          publishedAt,
+          modifiedAt: entry.modifiedAt || entry.modified || "",
+          publishedLabel,
           readTime: entry.readTime || "3 min read",
-          intro: entry.intro || "",
-          sections: (entry.sections || []) as BlogSection[],
-          faqs: (entry.faqs || []) as Faq[],
+          intro: content.intro || entry.intro || "",
+          sections: normalizeBlogSections(entry),
+          faqs: normalizeFaqs(entry.faqs) as Faq[],
+          resources: normalizeBlogResources(entry.resources),
+          internalLinks: normalizeBlogInternalLinks(entry.internalLinks || entry.internal_links),
           seoTitle: entry.seoTitle || entry.title || "",
-          metaDescription: entry.metaDescription || entry.excerpt || "",
-          keywords: entry.keywords || [],
+          metaDescription: entry.description || entry.metaDescription || entry.excerpt || "",
+          canonicalPath: entry.canonicalPath || entry.canonical_path || "",
+          keywords: normalizeStrings(entry.keywords),
         };
       })
       .filter((post) => post.slug && post.title);
@@ -162,6 +180,59 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     console.error("getBlogPosts:", (err as Error).message);
     return localBlogPosts;
   }
+}
+
+function normalizeBlogSections(entry: CmsRecord): BlogSection[] {
+  const contentBlocks = entry.content?.blocks;
+  if (Array.isArray(contentBlocks) && contentBlocks.length > 0) {
+    return contentBlocks
+      .map((block: any): BlogSection | null => {
+        if (block?.type === "image") return { type: "image" };
+        if (block?.type !== "section" && block?.type !== "text") return null;
+        const list = normalizeBlockList(block.list);
+        return {
+          type: "section",
+          heading: block.heading || "",
+          body: normalizeParagraphs(block.paragraphs),
+          bullets: list?.items || [],
+        };
+      })
+      .filter((section): section is BlogSection => section !== null);
+  }
+
+  return ((entry.sections || []) as BlogSection[]).map((section) => ({
+    ...section,
+    bullets: (section.bullets || []).filter((item) => item.trim().length > 0),
+  }));
+}
+
+function normalizeBlogResources(value: any): BlogResource[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((resource: any) => ({
+      title: resource.title || "",
+      href: resource.href || resource.url || "",
+      source: resource.source || "",
+    }))
+    .filter((resource) => resource.title && resource.href);
+}
+
+function normalizeBlogInternalLinks(value: any): BlogPost["internalLinks"] {
+  if (!value || typeof value !== "object") return undefined;
+  const normalize = (items: any): { title: string; href: string; description?: string }[] =>
+    Array.isArray(items)
+      ? items
+          .map((item: any) => ({
+            title: item.title || "",
+            href: item.href || item.url || "",
+            description: item.description || item.excerpt || "",
+          }))
+          .filter((item) => item.title && item.href)
+      : [];
+  return {
+    treatments: normalize(value.treatments),
+    blogs: normalize(value.blogs),
+  };
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
@@ -177,6 +248,7 @@ function normalizeBlocks(blocks: any[]): Block[] {
     .map((block: any): Block | null => {
       switch (block?.type) {
         case "text":
+        case "section":
           return { type: "text", heading: block.heading, paragraphs: block.paragraphs || [] };
         case "list":
           return {
@@ -198,7 +270,7 @@ function normalizeBlocks(blocks: any[]): Block[] {
             type: "gallery",
             images: (block.images || []).map((img: any) => ({
               src: resolveImage(img.src ? img.src : img),
-              alt: img.alt,
+              alt: img.alt || img.alt_text,
             })),
           };
         default:
@@ -208,23 +280,187 @@ function normalizeBlocks(blocks: any[]): Block[] {
     .filter((block): block is Block => block !== null);
 }
 
-// CMS-only: treatments come from the `treatment` collection. If CMS is
+function normalizeContentBlocks(blocks: any[]): Block[] {
+  return (blocks || [])
+    .map((block: any): Block | null => {
+      switch (block?.type) {
+        case "section":
+        case "text":
+          return {
+            type: "section",
+            heading: block.heading,
+            paragraphs: normalizeParagraphs(block.paragraphs),
+            list: normalizeBlockList(block.list),
+          };
+        case "image":
+          return { type: "image" };
+        case "list":
+        case "imageText":
+        case "gallery":
+          return normalizeBlocks([block])[0] ?? null;
+        default:
+          return null;
+      }
+    })
+    .filter((block): block is Block => block !== null);
+}
+
+function normalizeParagraphs(value: any): string[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => {
+      if (typeof item === "string") return item;
+      if (Array.isArray(item)) {
+        return item
+          .map((part) => {
+            if (typeof part === "string") return part;
+            if (part?.type === "text") return part.text || "";
+            if (part?.type === "link") return `${part.text || ""} (${part.href || ""})`;
+            return "";
+          })
+          .join("");
+      }
+      return "";
+    })
+    .filter((item) => item.trim().length > 0);
+}
+
+function normalizeBlockList(value: any): { type?: "ul" | "ol"; items: string[] } | undefined {
+  if (!value || !Array.isArray(value.items)) return undefined;
+  return {
+    type: value.type === "ol" ? "ol" : "ul",
+    items: normalizeStrings(value.items),
+  };
+}
+
+function normalizeStrings(value: any): string[] {
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+  }
+  if (typeof value === "string") {
+    return value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function normalizeFaqs(value: any): ServiceContent["faqs"] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((faq: any) => ({
+      q: faq.q || faq.question || "",
+      a: Array.isArray(faq.answer)
+        ? faq.answer.join("\n\n")
+        : faq.a || faq.answer || "",
+      openByDefault: Boolean(faq.openByDefault || faq.open_by_default),
+    }))
+    .filter((faq) => faq.q && faq.a);
+}
+
+function normalizeRelatedBlogs(value: any): ServiceContent["relatedBlogs"] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((blog: any) => ({
+      title: blog.title || "",
+      slug: blog.slug || "",
+      excerpt: blog.excerpt || "",
+    }))
+    .filter((blog) => blog.title && blog.slug);
+}
+
+function normalizeOutboundResources(value: any): ServiceContent["outboundResources"] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((resource: any) => ({
+      title: resource.title || "",
+      href: resource.href || resource.url || "",
+      url: resource.url || resource.href || "",
+      source: resource.source || "",
+    }))
+    .filter((resource) => resource.title && (resource.href || resource.url));
+}
+
+function normalizeDoctorNote(value: any): ServiceContent["doctorNote"] {
+  if (!value || typeof value !== "object" || !value.body) return undefined;
+  return {
+    heading: value.heading || "",
+    body: value.body,
+  };
+}
+
+function normalizeTreatmentPlanner(value: any): ServiceContent["treatmentPlanner"] {
+  if (!value || typeof value !== "object" || !Array.isArray(value.steps)) return undefined;
+  const steps = value.steps
+    .map((step: any) => ({
+      label: step.label || "",
+      question: step.question || "",
+      helper: step.helper || "",
+      options: Array.isArray(step.options)
+        ? step.options
+            .map((option: any) => ({
+              label: option.label || "",
+              note: option.note || "",
+            }))
+            .filter((option: any) => option.label && option.note)
+        : [],
+    }))
+    .filter((step: any) => step.label && step.question && step.options.length > 0);
+  if (!steps.length) return undefined;
+  return {
+    title: value.title || "Plan your treatment discussion",
+    intro: value.intro || "",
+    steps,
+    bring: normalizeStrings(value.bring),
+    outcomes: normalizeStrings(value.outcomes),
+  };
+}
+
+// CMS-only: treatments come from the `treatment-new` collection. If CMS is
 // disabled or fetch fails, pages will have no treatment data.
 export async function getServiceContent(): Promise<Record<string, ServiceContent>> {
   if (!cmsEnabled) return {};
   try {
-    const entries = await fetchCollection("treatment");
+    const entries = await fetchCollection("treatment-new");
     const result: Record<string, ServiceContent> = {};
     for (const item of entries) {
       const entry = item.entry || item;
       if (!entry.slug || !entry.title) continue;
+      const bodyContent = entry.content && typeof entry.content === "object" ? entry.content : null;
       result[entry.slug] = {
+        id: entry.id || entry.slug,
         slug: entry.slug,
         title: entry.title,
+        seoTitle: entry.seoTitle || entry.seo_title || "",
+        metaDescription: entry.metaDescription || entry.meta_description || entry.description || "",
+        description: entry.description || "",
+        keywords: normalizeStrings(entry.keywords || entry.focusKeywords || entry.focus_keywords),
+        canonicalPath: entry.canonicalPath || entry.canonical_path || "",
+        category: entry.category || "",
+        readTime: entry.readTime || entry.read_time || "",
+        excerpt: entry.excerpt || "",
+        author: entry.author || "",
+        authorImage: resolveImage(entry.authorImage || entry.author_image) || "",
+        publishedAt: entry.publishedAt || entry.published_at || "",
+        publishedLabel: entry.publishedLabel || entry.published_label || "",
+        tags: normalizeStrings(entry.tags),
         breadcrumb: entry.breadcrumb || entry.title,
-        subtitle: entry.subtitle || "",
+        subtitle: entry.subtitle || entry.heroSubtitle || entry.hero_subtitle || "",
+        heroSubtitle: entry.heroSubtitle || entry.hero_subtitle || entry.subtitle || "",
+        introBluf: entry.introBluf || entry.intro_bluf || bodyContent?.intro || "",
         heroImage: resolveImage(entry.hero_image) || "",
-        blocks: normalizeBlocks(entry.blocks),
+        contentImage: resolveImage(entry.content_image) || "",
+        cardAlt: entry.cardAlt || entry.card_alt || "",
+        bannerAlt: entry.bannerAlt || entry.banner_alt || "",
+        blocks: bodyContent?.blocks ? normalizeContentBlocks(bodyContent.blocks) : normalizeBlocks(entry.blocks),
+        faqs: normalizeFaqs(entry.faqs),
+        relatedBlogs: normalizeRelatedBlogs(entry.relatedBlogs || entry.related_blogs || entry.relatedBlogPosts),
+        relatedTreatments: normalizeStrings(entry.relatedTreatments || entry.related_treatments),
+        outboundResources: normalizeOutboundResources(entry.resources || entry.outboundResources || entry.outbound_resources),
+        doctorNote: normalizeDoctorNote(entry.doctorNote || entry.doctor_note),
+        lastReviewed: entry.lastReviewed || entry.last_reviewed || "",
+        treatmentPlanner: normalizeTreatmentPlanner(entry.treatmentPlanner || entry.treatment_planner),
       };
     }
     return result;

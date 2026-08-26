@@ -1,3 +1,7 @@
+.contentSection {
+  padding-top: clamp(24px, 4vw, 46px);
+}
+
 .layout {
   display: grid;
   grid-template-columns: 1fr 330px;
@@ -21,6 +25,26 @@
   object-fit: cover;
 }
 
+.bluf {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--rose);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 20px 22px;
+  margin-bottom: 34px;
+  box-shadow: var(--shadow-sm);
+}
+.bluf strong {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.bluf p {
+  color: var(--text);
+}
+
 .block {
   margin-bottom: 34px;
 }
@@ -34,14 +58,26 @@
   margin-top: 8px;
 }
 .checkList li {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  line-height: 1.65;
 }
-.checkList svg {
-  color: var(--teal);
-  flex-shrink: 0;
-  margin-top: 4px;
+.orderedList {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding-left: 22px;
+  list-style: decimal;
+}
+.orderedList li {
+  color: var(--text);
+}
+
+.contentImage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 12px 0 38px;
+  box-shadow: var(--shadow-sm);
 }
 
 .imageText {
@@ -84,6 +120,56 @@
   box-shadow: var(--shadow-sm);
 }
 
+.extraSection {
+  margin-top: 44px;
+}
+.extraSection h2 {
+  margin-bottom: 18px;
+}
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.relatedCard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+.relatedCard h3 {
+  font-size: 1.08rem;
+  margin-bottom: 14px;
+}
+.relatedCard ul {
+  display: grid;
+  gap: 10px;
+}
+.relatedCard a {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.relatedCard a:hover {
+  color: var(--rose);
+}
+.relatedCard a svg {
+  color: var(--rose);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.relatedCard small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 4px;
+}
 /* ------------------------------ sidebar ------------------------------ */
 .sidebar {
   position: sticky;
@@ -195,5 +281,8 @@
   }
   .galleryStrip {
     grid-template-columns: 1fr 1fr;
+  }
+  .relatedGrid {
+    grid-template-columns: 1fr;
   }
 }

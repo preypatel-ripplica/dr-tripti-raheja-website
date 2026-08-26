@@ -1,6 +1,6 @@
 // One-off exporter: converts the local content in lib/*.ts into CMS entry
 // JSON (docs/cms-seed/*.json) ready to paste into the CMS platform when
-// creating the `blogs`, `treatments` and `videos` collections.
+// creating the `blogs`, `treatment-new` and `videos` collections.
 // Run with: npx tsx scripts/export-cms-seed.mts
 import fs from "node:fs";
 import path from "node:path";

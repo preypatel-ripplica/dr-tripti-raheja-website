@@ -1,10 +1,8 @@
-import LocalizedLink from "@/components/I18n/LocalizedLink";
 import styles from "./PageHero.module.css";
 
 export default function PageHero({
   title,
   subtitle,
-  breadcrumb,
 }: {
   title: string;
   subtitle?: string;
@@ -13,11 +11,6 @@ export default function PageHero({
   return (
     <section className={styles.hero}>
       <div className="container">
-        <nav className={styles.crumbs} aria-label="Breadcrumb">
-          <LocalizedLink href="/">Home</LocalizedLink>
-          <span>/</span>
-          <span aria-current="page">{breadcrumb ?? title}</span>
-        </nav>
         <span className={styles.ast} aria-hidden>✳</span>
         <h1 className={styles.title}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}

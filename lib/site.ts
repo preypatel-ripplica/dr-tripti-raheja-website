@@ -59,11 +59,11 @@ export const nav: NavItem[] = [
     label: "Treatments",
     href: "#",
     children: [
-      { label: "High Risk Pregnancy", href: "/high-risk-pregnancy" },
-      { label: "Laparoscopic Surgery", href: "/laparoscopic-surgery" },
-      { label: "Infertility Treatment", href: "/infertility-treatment" },
-      { label: "Hysteroscopy Treatment", href: "/hysteroscopy-treatment" },
-      { label: "Robotic Gynaecologic Surgery", href: "/robotic-gynaecologic-surgery" },
+      { label: "High Risk Pregnancy", href: "/treatment/high-risk-pregnancy" },
+      { label: "Laparoscopic Surgery", href: "/treatment/laparoscopic-surgery" },
+      { label: "Infertility Treatment", href: "/treatment/infertility-treatment" },
+      { label: "Hysteroscopy Treatment", href: "/treatment/hysteroscopy-treatment" },
+      { label: "Robotic Gynaecologic Surgery", href: "/treatment/robotic-gynaecologic-surgery" },
     ],
   },
   {

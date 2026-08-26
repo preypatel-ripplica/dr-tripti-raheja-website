@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return pageMetadata({
     title: post.seoTitle || post.title,
     description: post.metaDescription || post.excerpt,
-    path: `/blogs/${post.slug}/`,
+    path: post.canonicalPath || `/blogs/${post.slug}/`,
     image: post.image,
     type: "article",
     keywords: post.keywords?.length ? post.keywords : undefined,
@@ -46,6 +46,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   if (!post) return notFound();
 
   const morePosts = blogPosts.filter((p) => p.slug !== post.slug);
+  const treatmentLinks = post.internalLinks?.treatments ?? [];
+  const blogLinks = post.internalLinks?.blogs ?? [];
+  const hasInternalLinks = Boolean(treatmentLinks.length || blogLinks.length);
 
   return (
     <>
@@ -82,7 +85,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className={`${styles.heroImg} leaf-frame`}>
             <Image
               src={post.image}
-              alt={post.title}
+              alt={post.cardAlt || post.title}
               fill
               priority
               sizes="(max-width: 900px) 100vw, 40vw"
@@ -93,7 +96,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       </section>
 
       {/* =========================== ARTICLE ========================== */}
-      <article className="section">
+      <article className={`section ${styles.articleSection}`}>
         <div className={`container ${styles.layout}`}>
           <aside className={styles.aside}>
             <div className={styles.tocCard}>
@@ -114,18 +117,46 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <p className={styles.intro}>{post.intro}</p>
 
             {post.sections.map((section, i) => (
-              <div key={i} id={`section-${i}`} className={styles.block}>
-                {section.heading && <h2>{section.heading}</h2>}
-                {section.body?.map((para, j) => <p key={j}>{para}</p>)}
-                {section.bullets && section.bullets.length > 0 && (
-                  <ul>
-                    {section.bullets.map((bullet, k) => (
-                      <Bullet key={k} text={bullet} />
-                    ))}
-                  </ul>
-                )}
-              </div>
+              section.type === "image" && post.contentImage ? (
+                <div key={i} className={styles.contentImage}>
+                  <Image
+                    src={post.contentImage}
+                    alt={post.bannerAlt || post.title}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 760px"
+                    className={styles.cover}
+                  />
+                </div>
+              ) : (
+                <div key={i} id={`section-${i}`} className={styles.block}>
+                  {section.heading && <h2>{section.heading}</h2>}
+                  {section.body?.map((para, j) => <p key={j}>{para}</p>)}
+                  {section.bullets && section.bullets.length > 0 && (
+                    <ul>
+                      {section.bullets.map((bullet, k) => (
+                        <Bullet key={k} text={bullet} />
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )
             ))}
+
+            {post.resources && post.resources.length > 0 && (
+              <div className={styles.resourceBlock}>
+                <h2>Resources</h2>
+                <ul>
+                  {post.resources.map((resource) => (
+                    <li key={resource.href}>
+                      <a href={resource.href} target="_blank" rel="noopener noreferrer">
+                        {resource.title}
+                        {resource.source && <span>{resource.source}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {post.faqs && post.faqs.length > 0 && (
               <div className={styles.faqBlock}>
@@ -137,15 +168,35 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         </div>
       </article>
 
+      {hasInternalLinks && (
+        <section className={styles.nextReadsSection}>
+          <div className={`container ${styles.nextReadsInner}`}>
+            <div className="section-head">
+              <span className="eyebrow">Helpful next reads</span>
+              <h2>Continue from here</h2>
+            </div>
+            <div className={styles.linkGrid}>
+              {[...treatmentLinks, ...blogLinks].map((link) => (
+                <LocalizedLink key={link.href} href={link.href} className={styles.linkCard}>
+                  <span>
+                    <strong>{link.title}</strong>
+                    {link.description && <small>{link.description}</small>}
+                  </span>
+                  <ArrowRight width={16} height={16} />
+                </LocalizedLink>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ========================= MORE BLOGS ========================= */}
       {morePosts.length > 0 && (
         <section className={`section section--tint ${styles.moreSection}`}>
           <div className="container">
             <div className="section-head">
               <span className="eyebrow">More Blogs</span>
-              <h2>
-                Keep <span className="accent-italic">reading</span>
-              </h2>
+              <h2>Keep reading</h2>
             </div>
             <div className={styles.moreGrid}>
               {morePosts.map((p) => (

@@ -6,7 +6,8 @@ import type { Faq as FaqItem } from "@/lib/content";
 import styles from "./Faq.module.css";
 
 export default function Faq({ items }: { items: FaqItem[] }) {
-  const [open, setOpen] = useState<number | null>(0);
+  const defaultOpen = items.findIndex((item) => item.openByDefault);
+  const [open, setOpen] = useState<number | null>(defaultOpen >= 0 ? defaultOpen : 0);
 
   return (
     <div className={styles.list}>

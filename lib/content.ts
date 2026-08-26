@@ -3,7 +3,19 @@
 // CMS integrator can replace each export with a CMS query later.
 // -----------------------------------------------------------------------------
 
-export type Faq = { q: string; a: string };
+export type Faq = { q: string; a: string; openByDefault?: boolean };
+
+export type BlogResource = {
+  title: string;
+  href: string;
+  source?: string;
+};
+
+export type BlogInternalLink = {
+  title: string;
+  href: string;
+  description?: string;
+};
 
 export const faqs: Faq[] = [
   {
@@ -139,6 +151,7 @@ export const galleryVideos = [
 // A blog article is stored as structured blocks (intro → sections → FAQs) so
 // the detail template stays data-driven and a CMS can replace it later.
 export type BlogSection = {
+  type?: "section" | "image";
   heading?: string;
   body?: string[];
   // Bullets may use "Label, text" form; the template bolds the label part.
@@ -151,14 +164,26 @@ export type BlogPost = {
   category: string;
   excerpt: string;
   image: string;
+  contentImage?: string;
+  bannerAlt?: string;
+  cardAlt?: string;
   date: string;
+  publishedAt?: string;
+  modifiedAt?: string;
+  publishedLabel?: string;
   readTime: string;
   intro: string;
   sections: BlogSection[];
   faqs?: Faq[];
+  resources?: BlogResource[];
+  internalLinks?: {
+    treatments?: BlogInternalLink[];
+    blogs?: BlogInternalLink[];
+  };
   // SEO overrides (CMS fields; fall back to title/excerpt when empty).
   seoTitle?: string;
   metaDescription?: string;
+  canonicalPath?: string;
   keywords?: string[];
 };
 

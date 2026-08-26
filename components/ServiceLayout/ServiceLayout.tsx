@@ -2,16 +2,21 @@ import LocalizedLink from "@/components/I18n/LocalizedLink";
 import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
 import Appointment from "@/components/Appointment/Appointment";
+import Faq from "@/components/Faq/Faq";
 import JsonLd from "@/components/JsonLd";
-import { TreatmentJourneyWidget } from "@/components/InteractiveCare/InteractiveCare";
+import {
+  TreatmentJourneyWidget,
+  type TreatmentPlanner,
+} from "@/components/InteractiveCare/InteractiveCare";
 import { services, contact } from "@/lib/site";
-import { breadcrumbSchema, medicalProcedureSchema } from "@/lib/seo";
-import { Check, Phone, ArrowRight } from "@/components/Icons";
+import { breadcrumbSchema, faqSchema, medicalProcedureSchema } from "@/lib/seo";
+import { Phone, ArrowRight } from "@/components/Icons";
 import styles from "./ServiceLayout.module.css";
 
 export type Block =
-  | { type: "text"; heading?: string; paragraphs: string[] }
+  | { type: "text" | "section"; heading?: string; paragraphs: string[]; list?: { type?: "ul" | "ol"; items: string[] } }
   | { type: "list"; heading?: string; intro?: string; items: string[] }
+  | { type: "image" }
   | {
       type: "imageText";
       heading?: string;
@@ -22,23 +27,65 @@ export type Block =
   | { type: "gallery"; images: { src: string; alt?: string }[] };
 
 export type ServiceContent = {
+  id?: string;
   slug: string;
   title: string;
+  seoTitle?: string;
+  metaDescription?: string;
+  description?: string;
+  keywords?: string[];
+  canonicalPath?: string;
+  category?: string;
+  readTime?: string;
+  excerpt?: string;
+  author?: string;
+  authorImage?: string;
+  publishedAt?: string;
+  publishedLabel?: string;
+  tags?: string[];
   subtitle?: string;
+  heroSubtitle?: string;
   breadcrumb?: string;
+  introBluf?: string;
   heroImage: string;
+  contentImage?: string;
+  cardAlt?: string;
+  bannerAlt?: string;
   blocks: Block[];
+  faqs?: { q: string; a: string }[];
+  relatedBlogs?: { title: string; slug: string; excerpt?: string }[];
+  relatedTreatments?: string[];
+  outboundResources?: { title: string; href?: string; url?: string; source?: string }[];
+  doctorNote?: { heading?: string; body: string };
+  lastReviewed?: string;
+  treatmentPlanner?: TreatmentPlanner;
 };
 
 function BlockView({ block }: { block: Block }) {
   switch (block.type) {
     case "text":
+    case "section":
       return (
         <div className={styles.block}>
           {block.heading && <h2>{block.heading}</h2>}
           {block.paragraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+          {block.list && block.list.items.length > 0 && (
+            block.list.type === "ol" ? (
+              <ol className={styles.orderedList}>
+                {block.list.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ol>
+            ) : (
+              <ul className={styles.checkList}>
+                {block.list.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )
+          )}
         </div>
       );
     case "list":
@@ -48,14 +95,13 @@ function BlockView({ block }: { block: Block }) {
           {block.intro && <p>{block.intro}</p>}
           <ul className={styles.checkList}>
             {block.items.map((item) => (
-              <li key={item}>
-                <Check width={18} height={18} />
-                <span>{item}</span>
-              </li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </div>
       );
+    case "image":
+      return null;
     case "imageText":
       return (
         <div
@@ -100,6 +146,13 @@ function BlockView({ block }: { block: Block }) {
 }
 
 export default function ServiceLayout({ content }: { content: ServiceContent }) {
+  const faqs = content.faqs ?? [];
+  const relatedTreatments = services.filter(
+    (service) => service.slug !== content.slug && content.relatedTreatments?.includes(service.slug)
+  );
+  const hasRelatedContent = Boolean(content.relatedBlogs?.length || relatedTreatments.length);
+  const intro = cleanIntro(content.introBluf);
+
   return (
     <>
       <JsonLd
@@ -109,11 +162,12 @@ export default function ServiceLayout({ content }: { content: ServiceContent }) 
             { name: content.title, path: `/treatment/${content.slug}/` },
           ]),
           medicalProcedureSchema(content),
+          ...(faqs.length > 0 ? [faqSchema(faqs)] : []),
         ]}
       />
-      <PageHero title={content.title} subtitle={content.subtitle} breadcrumb={content.breadcrumb} />
+      <PageHero title={content.title} subtitle={content.heroSubtitle || content.subtitle} breadcrumb={content.breadcrumb} />
 
-      <section className="section">
+      <section className={`section ${styles.contentSection}`}>
         <div className={`container ${styles.layout}`}>
           <div className={styles.main}>
             <div className={styles.heroImage}>
@@ -126,12 +180,81 @@ export default function ServiceLayout({ content }: { content: ServiceContent }) 
                 priority
               />
             </div>
+            {intro && (
+              <div className={styles.bluf}>
+                <p>{intro}</p>
+              </div>
+            )}
             <div className="prose">
-              {content.blocks.map((block, i) => (
-                <BlockView key={i} block={block} />
-              ))}
+              {content.blocks.map((block, i) =>
+                block.type === "image" && content.contentImage ? (
+                  <div key={i} className={styles.contentImage}>
+                    <Image
+                      src={content.contentImage}
+                      alt={content.bannerAlt || content.title}
+                      width={820}
+                      height={460}
+                      className={styles.cover}
+                    />
+                  </div>
+                ) : (
+                  <BlockView key={i} block={block} />
+                )
+              )}
+              {content.doctorNote && (
+                <div className={styles.block}>
+                  <h2>{content.doctorNote.heading || "Doctor's note"}</h2>
+                  <p>{content.doctorNote.body}</p>
+                </div>
+              )}
             </div>
-            <TreatmentJourneyWidget slug={content.slug} />
+            {faqs.length > 0 && (
+              <section className={styles.extraSection}>
+                <h2>Frequently asked questions</h2>
+                <Faq items={faqs} />
+              </section>
+            )}
+            {hasRelatedContent && (
+              <section className={styles.extraSection}>
+                <h2>Helpful next reads</h2>
+                <div className={styles.relatedGrid}>
+                  {relatedTreatments.length > 0 && (
+                    <div className={styles.relatedCard}>
+                      <h3>Related treatments</h3>
+                      <ul>
+                        {relatedTreatments.map((service) => (
+                          <li key={service.slug}>
+                            <LocalizedLink href={`/treatment/${service.slug}`}>
+                              {service.title}
+                              <ArrowRight width={15} height={15} />
+                            </LocalizedLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {content.relatedBlogs && content.relatedBlogs.length > 0 && (
+                    <div className={styles.relatedCard}>
+                      <h3>Related blogs</h3>
+                      <ul>
+                        {content.relatedBlogs.map((blog) => (
+                          <li key={blog.slug}>
+                            <LocalizedLink href={`/blogs/${blog.slug}`}>
+                              <span>
+                                {blog.title}
+                                {blog.excerpt && <small>{blog.excerpt}</small>}
+                              </span>
+                              <ArrowRight width={15} height={15} />
+                            </LocalizedLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+            <TreatmentJourneyWidget slug={content.slug} planner={content.treatmentPlanner} />
           </div>
 
           {/* Sidebar */}
@@ -142,7 +265,7 @@ export default function ServiceLayout({ content }: { content: ServiceContent }) 
                 {services.map((s) => (
                   <li key={s.slug}>
                     <LocalizedLink
-                      href={`/${s.slug}`}
+                      href={`/treatment/${s.slug}`}
                       className={s.slug === content.slug ? styles.sideActive : ""}
                     >
                       <span>{s.title}</span>
@@ -173,4 +296,9 @@ export default function ServiceLayout({ content }: { content: ServiceContent }) 
       <Appointment />
     </>
   );
+}
+
+function cleanIntro(value?: string) {
+  const cleaned = (value || "").replace(/^the bottom line:\s*/i, "").trim();
+  return cleaned ? cleaned.charAt(0).toUpperCase() + cleaned.slice(1) : "";
 }
