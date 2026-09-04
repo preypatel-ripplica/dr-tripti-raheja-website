@@ -51,12 +51,23 @@ async function cmsPost(endpoint: string, body: CmsRecord): Promise<any | null> {
 
 // Download CMS media at build time into /public/cms-images so images keep
 // working in the static export (signed URLs expire).
+function findLocalMedia(mediaId: string): string | null {
+  const directory = path.join(process.cwd(), "public", "cms-images");
+  if (!fs.existsSync(directory)) return null;
+  const filename = fs.readdirSync(directory).find((file) => file.startsWith(`${mediaId}.`));
+  return filename ? `/cms-images/${filename}` : null;
+}
+
 async function getMedia(mediaId: string): Promise<CmsRecord | null> {
+  const existingPath = findLocalMedia(mediaId);
+  if (existingPath) return { _localPath: existingPath };
+
   let media: CmsRecord | null = null;
   try {
     media = await cmsPost("/api/content.media.get", { media_id: mediaId });
   } catch {
-    return null;
+    const localPath = findLocalMedia(mediaId);
+    return localPath ? { _localPath: localPath } : null;
   }
   if (!media) return null;
 
